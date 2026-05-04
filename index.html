@@ -99,6 +99,10 @@
   .field { display: flex; flex-direction: column; gap: 5px; }
   .field label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
   .field label.jury-label { color: var(--jury); }
+  .panel-ninja .field label { color: #22c55e; }
+  .panel-ninja .field label.jury-label { color: #86efac; }
+  .panel-boxer .field label { color: #ef4444; }
+  .panel-boxer .field label.jury-label { color: #fca5a5; }
   .field input {
     background: rgba(255,255,255,0.06); border: 1px solid var(--border);
     border-radius: 12px; padding: 0 12px; height: 48px;
@@ -191,7 +195,7 @@
   </div>
 
   <!-- NINJA PANEL -->
-  <div class="panel active" id="panel-ninja">
+  <div class="panel panel-ninja active" id="panel-ninja">
     <div class="form-wrap">
       <div class="form-row">
         <div class="field"><label>Imię</label><input id="ninja-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
@@ -210,7 +214,7 @@
   </div>
 
   <!-- BOXER PANEL -->
-  <div class="panel" id="panel-boxer">
+  <div class="panel panel-boxer" id="panel-boxer">
     <div class="form-wrap">
       <div class="form-row">
         <div class="field"><label>Imię</label><input id="boxer-name" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
@@ -276,8 +280,8 @@
 
   window.switchTab = function(tab) {
     currentTab = tab;
-    document.getElementById('panel-ninja').className = 'panel' + (tab==='ninja' ? ' active' : '');
-    document.getElementById('panel-boxer').className = 'panel' + (tab==='boxer' ? ' active' : '');
+    document.getElementById('panel-ninja').className = 'panel panel-ninja' + (tab==='ninja' ? ' active' : '');
+    document.getElementById('panel-boxer').className = 'panel panel-boxer' + (tab==='boxer' ? ' active' : '');
     document.getElementById('tab-ninja').className = 'tab-btn' + (tab==='ninja' ? ' active-ninja' : '');
     document.getElementById('tab-boxer').className = 'tab-btn' + (tab==='boxer' ? ' active-boxer' : '');
     document.getElementById('brandLabel').className = 'brand ' + tab;
