@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ranking — Ninja Frog</title>
+<title>Ranking — Triki</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" />
 <style>
   :root {
     --bg1: #0f0c29; --bg2: #1a1a6e; --bg3: #2d1b69;
     --accent1: #f0547a; --accent2: #5ec8e0;
+    --accent-box1: #f97316; --accent-box2: #fbbf24;
     --gold: #ffd166; --silver: #c0c0c0; --bronze: #cd7f32;
     --text: #f0eeff; --muted: #9991cc;
     --card: rgba(255,255,255,0.05); --border: rgba(255,255,255,0.1);
@@ -23,7 +24,7 @@
   }
   body::before, body::after {
     content: ''; position: fixed; border-radius: 50%;
-    filter: blur(80px); opacity: 0.25; pointer-events: none; z-index: 0;
+    filter: blur(80px); opacity: 0.2; pointer-events: none; z-index: 0;
     animation: drift 12s ease-in-out infinite alternate;
   }
   body::before { width: 400px; height: 400px; background: radial-gradient(circle, #f0547a, transparent); top: -100px; left: -100px; }
@@ -32,15 +33,48 @@
 
   .wrapper { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
 
+  /* CLEAR BTN */
+  .btn-clear {
+    position: fixed; top: max(env(safe-area-inset-top, 0px) + 12px, 12px); right: 16px;
+    z-index: 100;
+    background: rgba(15,12,41,0.7); backdrop-filter: blur(10px);
+    border: 1px solid var(--border); border-radius: 10px;
+    color: var(--muted); font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 8px 14px; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif;
+  }
+  .btn-clear:hover { border-color: var(--accent1); color: var(--accent1); }
+
+  /* TABS */
+  .tabs {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px; margin-bottom: 2rem;
+  }
+  .tab-btn {
+    height: 56px; border-radius: 16px; border: 1px solid var(--border);
+    background: var(--card); color: var(--muted);
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+    letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  .tab-btn.active-ninja {
+    background: linear-gradient(135deg, rgba(240,84,122,0.2), rgba(94,200,224,0.2));
+    border-color: rgba(240,84,122,0.5); color: var(--text);
+  }
+  .tab-btn.active-boxer {
+    background: linear-gradient(135deg, rgba(249,115,22,0.2), rgba(251,191,36,0.2));
+    border-color: rgba(249,115,22,0.5); color: var(--text);
+  }
+
+  /* HEADER */
   .header { text-align: center; margin-bottom: 2rem; }
   .brand {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(2.8rem, 10vw, 5rem);
-    letter-spacing: 0.08em;
-    background: linear-gradient(90deg, var(--accent1), var(--accent2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    line-height: 1;
+    letter-spacing: 0.08em; line-height: 1;
   }
+  .brand.ninja { background: linear-gradient(90deg, var(--accent1), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .brand.boxer { background: linear-gradient(90deg, var(--accent-box1), var(--accent-box2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .subtitle { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; }
   .status-pill {
     display: inline-flex; align-items: center; gap: 6px;
@@ -55,6 +89,7 @@
   .dot.off { background: var(--accent1); animation: none; }
   @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
 
+  /* FORM */
   .form-wrap {
     background: var(--card); border: 1px solid var(--border);
     border-radius: 20px; padding: 1.25rem; margin-bottom: 1.5rem;
@@ -77,32 +112,21 @@
 
   .btn-add {
     width: 100%; height: 50px; border-radius: 14px; border: none;
-    background: linear-gradient(135deg, var(--accent1), #c0336a);
     color: #fff; font-family: 'Nunito', sans-serif;
     font-size: 1rem; font-weight: 800; cursor: pointer;
     letter-spacing: 0.05em; transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 4px 20px rgba(240,84,122,0.35);
   }
+  .btn-add.ninja { background: linear-gradient(135deg, var(--accent1), #c0336a); box-shadow: 0 4px 20px rgba(240,84,122,0.35); }
+  .btn-add.boxer { background: linear-gradient(135deg, var(--accent-box1), #d97706); box-shadow: 0 4px 20px rgba(249,115,22,0.35); }
   .btn-add:active { transform: scale(0.97); }
   .err { font-size: 0.75rem; color: var(--accent1); margin-top: 6px; display: none; font-weight: 700; }
-  .form-footer { display: flex; align-items: center; justify-content: flex-end; margin-top: 0.9rem; }
-  .sync-info { font-size: 0.68rem; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; flex: 1; }
+  .form-footer { display: flex; align-items: center; margin-top: 0.9rem; }
+  .sync-info { font-size: 0.68rem; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; }
 
-  .ranking-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; gap: 8px; }
+  /* RANKING */
+  .ranking-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
   .ranking-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; color: var(--muted); }
-  .ranking-right { display: flex; align-items: center; gap: 12px; }
   .ranking-count { font-size: 0.72rem; font-weight: 800; color: var(--muted); letter-spacing: 0.08em; }
-  .btn-clear {
-    position: fixed; top: max(env(safe-area-inset-top, 0px) + 12px, 12px); right: 16px;
-    z-index: 100;
-    background: rgba(15,12,41,0.7); backdrop-filter: blur(10px);
-    border: 1px solid var(--border); border-radius: 10px;
-    color: var(--muted); font-size: 0.68rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 8px 14px; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif;
-  }
-  .btn-clear:hover { border-color: var(--accent1); color: var(--accent1); }
-
   .list { display: flex; flex-direction: column; gap: 8px; }
   .entry {
     display: flex; align-items: center; gap: 12px;
@@ -123,23 +147,26 @@
   .entry.rank-1 .rank-badge { background: rgba(255,209,102,0.15); color: var(--gold); border-color: rgba(255,209,102,0.4); font-size: 1.4rem; }
   .entry.rank-2 .rank-badge { background: rgba(192,192,192,0.12); color: var(--silver); border-color: rgba(192,192,192,0.35); font-size: 1.4rem; }
   .entry.rank-3 .rank-badge { background: rgba(205,127,50,0.12); color: var(--bronze); border-color: rgba(205,127,50,0.35); font-size: 1.4rem; }
-
   .entry-info { flex: 1; min-width: 0; }
   .entry-name { font-size: 1rem; font-weight: 800; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .entry-breakdown { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
   .entry-breakdown .jury-pts { color: var(--jury); font-weight: 700; }
-
   .entry-score {
     font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; flex-shrink: 0;
     background: linear-gradient(90deg, var(--accent1), var(--accent2));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
+  .entry-score.boxer { background: linear-gradient(90deg, var(--accent-box1), var(--accent-box2)); -webkit-background-clip: text; background-clip: text; }
   .entry.rank-1 .entry-score { background: linear-gradient(90deg, var(--gold), #ffaa00); -webkit-background-clip: text; background-clip: text; }
   .score-unit { font-size: 0.6rem; color: var(--muted); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; align-self: flex-end; margin-bottom: 5px; flex-shrink: 0; }
   .del-btn { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.2); font-size: 0.85rem; padding: 6px 8px; border-radius: 6px; transition: all 0.15s; flex-shrink: 0; }
   .del-btn:hover { color: var(--accent1); background: rgba(240,84,122,0.12); }
   .empty { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 0.9rem; border: 1px dashed var(--border); border-radius: 16px; }
   .empty span { font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.4; }
+
+  /* PANEL visibility */
+  .panel { display: none; }
+  .panel.active { display: block; }
 
   @media (max-width: 480px) {
     .form-row { grid-template-columns: 1fr 1fr; }
@@ -149,46 +176,63 @@
 </head>
 <body>
 <div class="wrapper">
+
+  <button class="btn-clear" id="btnClear" onclick="clearAll()">Wyczyść</button>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active-ninja" id="tab-ninja" onclick="switchTab('ninja')">Ninja Frog</button>
+    <button class="tab-btn" id="tab-boxer" onclick="switchTab('boxer')">Bokser</button>
+  </div>
+
+  <!-- STATUS -->
   <div class="header">
-    <div class="brand">Ninja Frog</div>
-    <div class="subtitle">Ranking Eliminacji</div>
+    <div class="brand ninja" id="brandLabel">Ninja Frog</div>
+    <div class="subtitle" id="subtitleLabel">Ranking Eliminacji</div>
     <div class="status-pill" id="statusPill">
       <span class="dot off" id="dot"></span>
       <span id="statusText">łączenie...</span>
     </div>
   </div>
 
-  <div class="form-wrap">
-    <div class="form-row">
-      <div class="field">
-        <label>Imię</label>
-        <input id="nameInput" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/>
+  <!-- NINJA PANEL -->
+  <div class="panel active" id="panel-ninja">
+    <div class="form-wrap">
+      <div class="form-row">
+        <div class="field"><label>Imię</label><input id="ninja-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="ninja-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
+        <div class="field"><label class="jury-label">+ Jury</label><input id="ninja-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
       </div>
-      <div class="field">
-        <label>Wynik</label>
-        <input id="scoreInput" type="number" placeholder="0" step="any" inputmode="decimal"/>
-      </div>
-      <div class="field">
-        <label class="jury-label">+ Jury</label>
-        <input id="juryInput" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/>
-      </div>
+      <button class="btn-add ninja" onclick="addEntry('ninja')">+ Dodaj</button>
+      <div class="err" id="ninja-err">Wypełnij imię i wynik!</div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span></div>
     </div>
-    <button class="btn-add" onclick="addEntry()">+ Dodaj</button>
-    <div class="err" id="err">Wypełnij imię i wynik!</div>
-    <div class="form-footer">
-      <span class="sync-info">Synchronizacja na żywo</span>
+    <div class="ranking-header">
+      <div class="ranking-title">Wyniki Ninja Frog</div>
+      <div class="ranking-count" id="ninja-count">0 zawodników</div>
     </div>
+    <div class="list" id="ninja-list"><div class="empty"><span>🥷</span>Brak wyników!</div></div>
   </div>
 
-  <button class="btn-clear" onclick="clearAll()">Wyczyść</button>
+  <!-- BOXER PANEL -->
+  <div class="panel" id="panel-boxer">
+    <div class="form-wrap">
+      <div class="form-row">
+        <div class="field"><label>Imię</label><input id="boxer-name" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="boxer-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
+        <div class="field"><label class="jury-label">+ Jury</label><input id="boxer-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+      </div>
+      <button class="btn-add boxer" onclick="addEntry('boxer')">+ Dodaj</button>
+      <div class="err" id="boxer-err">Wypełnij imię i wynik!</div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span></div>
+    </div>
+    <div class="ranking-header">
+      <div class="ranking-title">Wyniki Bokser</div>
+      <div class="ranking-count" id="boxer-count">0 zawodników</div>
+    </div>
+    <div class="list" id="boxer-list"><div class="empty"><span>🥊</span>Brak wyników!</div></div>
+  </div>
 
-  <div class="ranking-header">
-    <div class="ranking-title">Wyniki</div>
-    <div class="ranking-count" id="countLabel">0 zawodników</div>
-  </div>
-  <div class="list" id="list">
-    <div class="empty"><span>🏆</span>Brak wyników — dodaj pierwszego zawodnika!</div>
-  </div>
 </div>
 
 <script type="module">
@@ -207,8 +251,9 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-  const rankingRef = ref(db, 'ranking');
-  let entries = [];
+
+  const data = { ninja: [], boxer: [] };
+  let currentTab = 'ninja';
 
   function setStatus(ok) {
     const pill = document.getElementById('statusPill');
@@ -218,87 +263,104 @@
     else { pill.className = 'status-pill offline'; dot.className = 'dot off'; txt.textContent = 'brak połączenia'; }
   }
 
-  onValue(rankingRef, (snapshot) => {
-    const data = snapshot.val();
-    entries = data ? Object.values(data) : [];
-    entries.sort((a, b) => (b.score + (b.jury||0)) - (a.score + (a.jury||0)));
-    render();
-    setStatus(true);
-  }, () => setStatus(false));
+  ['ninja','boxer'].forEach(sport => {
+    onValue(ref(db, sport), (snap) => {
+      const val = snap.val();
+      data[sport] = val ? Object.values(val) : [];
+      data[sport].sort((a,b) => (b.score+(b.jury||0)) - (a.score+(a.jury||0)));
+      render(sport);
+      setStatus(true);
+    }, () => setStatus(false));
+  });
 
-  function saveEntries() {
+  function save(sport) {
     const obj = {};
-    entries.forEach(e => { obj[e.id] = e; });
-    set(rankingRef, obj).catch(() => setStatus(false));
+    data[sport].forEach(e => { obj[e.id] = e; });
+    set(ref(db, sport), obj).catch(() => setStatus(false));
   }
 
-  window.addEntry = function() {
-    const nameEl = document.getElementById('nameInput');
-    const scoreEl = document.getElementById('scoreInput');
-    const juryEl = document.getElementById('juryInput');
-    const err = document.getElementById('err');
-    const name = nameEl.value.trim();
-    const score = parseFloat(scoreEl.value);
-    const jury = parseFloat(juryEl.value) || 0;
-    if (!name || isNaN(score)) { err.style.display = 'block'; return; }
-    err.style.display = 'none';
-    entries.push({ id: 'e' + Date.now(), name, score, jury });
-    entries.sort((a, b) => (b.score + (b.jury||0)) - (a.score + (a.jury||0)));
-    nameEl.value = ''; scoreEl.value = ''; juryEl.value = '';
-    nameEl.focus();
-    render();
-    saveEntries();
+  window.switchTab = function(tab) {
+    currentTab = tab;
+    document.getElementById('panel-ninja').className = 'panel' + (tab==='ninja' ? ' active' : '');
+    document.getElementById('panel-boxer').className = 'panel' + (tab==='boxer' ? ' active' : '');
+    document.getElementById('tab-ninja').className = 'tab-btn' + (tab==='ninja' ? ' active-ninja' : '');
+    document.getElementById('tab-boxer').className = 'tab-btn' + (tab==='boxer' ? ' active-boxer' : '');
+    document.getElementById('brandLabel').className = 'brand ' + tab;
+    document.getElementById('brandLabel').textContent = tab === 'ninja' ? 'Ninja Frog' : 'Bokser';
   };
 
-  window.deleteEntry = function(id) {
-    entries = entries.filter(e => e.id !== id);
-    render();
-    saveEntries();
+  window.addEntry = function(sport) {
+    const name = document.getElementById(sport+'-name').value.trim();
+    const score = parseFloat(document.getElementById(sport+'-score').value);
+    const jury = parseFloat(document.getElementById(sport+'-jury').value) || 0;
+    const err = document.getElementById(sport+'-err');
+    if (!name || isNaN(score)) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    data[sport].push({ id: 'e'+Date.now(), name, score, jury });
+    data[sport].sort((a,b) => (b.score+(b.jury||0)) - (a.score+(a.jury||0)));
+    document.getElementById(sport+'-name').value = '';
+    document.getElementById(sport+'-score').value = '';
+    document.getElementById(sport+'-jury').value = '';
+    document.getElementById(sport+'-name').focus();
+    render(sport);
+    save(sport);
+  };
+
+  window.deleteEntry = function(sport, id) {
+    data[sport] = data[sport].filter(e => e.id !== id);
+    render(sport);
+    save(sport);
   };
 
   window.clearAll = function() {
-    if (!confirm('Wyczyścić cały ranking?')) return;
-    entries = [];
-    render();
-    set(rankingRef, null);
+    if (!confirm('Wyczyścić ranking ' + (currentTab==='ninja' ? 'Ninja Frog' : 'Bokser') + '?')) return;
+    data[currentTab] = [];
+    render(currentTab);
+    set(ref(db, currentTab), null);
   };
 
   const MEDALS = ['🥇','🥈','🥉'];
   function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function fmt(s) { return Number.isInteger(s) ? s : parseFloat(s.toFixed(2)); }
 
-  function render() {
-    const list = document.getElementById('list');
+  function render(sport) {
+    const entries = data[sport];
     const n = entries.length;
-    document.getElementById('countLabel').textContent = n + ' zawodnik' + (n === 1 ? '' : 'ów');
-    if (n === 0) { list.innerHTML = '<div class="empty"><span>🏆</span>Brak wyników — dodaj pierwszego zawodnika!</div>'; return; }
+    document.getElementById(sport+'-count').textContent = n + ' zawodnik' + (n===1?'':'ów');
+    const list = document.getElementById(sport+'-list');
+    if (n===0) {
+      list.innerHTML = '<div class="empty"><span>'+(sport==='ninja'?'🥷':'🥊')+'</span>Brak wyników!</div>';
+      return;
+    }
     list.innerHTML = '';
-    entries.forEach((e, i) => {
-      const rank = i + 1;
-      const jury = e.jury || 0;
+    entries.forEach((e,i) => {
+      const rank = i+1;
+      const jury = e.jury||0;
       const total = e.score + jury;
       const div = document.createElement('div');
-      div.className = 'entry' + (rank <= 3 ? ' rank-' + rank : '');
-      const breakdown = jury !== 0
-        ? `<div class="entry-breakdown">${fmt(e.score)} pkt + <span class="jury-pts">+${fmt(jury)} jury</span></div>`
-        : '';
+      div.className = 'entry'+(rank<=3?' rank-'+rank:'');
+      const breakdown = jury!==0 ? `<div class="entry-breakdown">${fmt(e.score)} pkt + <span class="jury-pts">+${fmt(jury)} jury</span></div>` : '';
+      const scoreClass = rank===1 ? 'entry-score' : 'entry-score '+(sport==='boxer'?'boxer':'');
       div.innerHTML = `
-        <div class="rank-badge">${rank <= 3 ? MEDALS[i] : rank}</div>
+        <div class="rank-badge">${rank<=3?MEDALS[i]:rank}</div>
         <div class="entry-info">
           <div class="entry-name">${esc(e.name)}</div>
           ${breakdown}
         </div>
-        <div class="entry-score">${fmt(total)}</div>
+        <div class="${scoreClass}">${fmt(total)}</div>
         <div class="score-unit">pkt</div>
-        <button class="del-btn" onclick="deleteEntry('${e.id}')" title="Usuń">✕</button>
+        <button class="del-btn" onclick="deleteEntry('${sport}','${e.id}')" title="Usuń">✕</button>
       `;
       list.appendChild(div);
     });
   }
 
-  document.getElementById('juryInput').addEventListener('keydown', e => { if (e.key==='Enter') window.addEntry(); });
-  document.getElementById('scoreInput').addEventListener('keydown', e => { if (e.key==='Enter') document.getElementById('juryInput').focus(); });
-  document.getElementById('nameInput').addEventListener('keydown', e => { if (e.key==='Enter') document.getElementById('scoreInput').focus(); });
+  // keyboard
+  ['ninja','boxer'].forEach(sport => {
+    document.getElementById(sport+'-name').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById(sport+'-score').focus(); });
+    document.getElementById(sport+'-score').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById(sport+'-jury').focus(); });
+    document.getElementById(sport+'-jury').addEventListener('keydown', e => { if(e.key==='Enter') window.addEntry(sport); });
+  });
 </script>
 </body>
 </html>
