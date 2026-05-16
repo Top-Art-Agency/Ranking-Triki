@@ -117,6 +117,8 @@
   .field { display: flex; flex-direction: column; gap: 5px; }
   .field label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
   .field label.jury-label { color: var(--jury); }
+  .jury-field { transition: opacity 0.2s; }
+  .jury-field.hidden { opacity: 0; pointer-events: none; }
   .panel-ninja .field label { color: #22c55e; }
   .panel-toss .field label { color: #f59e0b; }
   .panel-toss .field label.jury-label { color: #fcd34d; }
@@ -152,7 +154,22 @@
   .btn-add.snake1v1 { background: #8b5cf6; box-shadow: 0 4px 20px rgba(139,92,246,0.35); }
   .btn-add:active { transform: scale(0.97); }
   .err { font-size: 0.75rem; color: var(--accent1); margin-top: 6px; display: none; font-weight: 700; }
-  .form-footer { display: flex; align-items: center; margin-top: 0.9rem; }
+  .form-footer { display: flex; align-items: center; margin-top: 0.9rem; gap: 12px; flex-wrap: wrap; }
+  .toggle-wrap { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+  .toggle-wrap input { display: none; }
+  .toggle-track {
+    width: 36px; height: 20px; border-radius: 999px;
+    background: rgba(255,255,255,0.15); border: 1px solid var(--border);
+    position: relative; transition: background 0.2s;
+  }
+  .toggle-track::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: white; transition: transform 0.2s;
+  }
+  .toggle-wrap input:checked + .toggle-track { background: var(--jury); border-color: var(--jury); }
+  .toggle-wrap input:checked + .toggle-track::after { transform: translateX(16px); }
+  .toggle-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .sync-info { font-size: 0.68rem; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; }
 
   /* RANKING */
@@ -235,11 +252,18 @@
       <div class="form-row">
         <div class="field"><label>Imię</label><input id="ninja-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
         <div class="field"><label>Wynik</label><input id="ninja-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field"><label class="jury-label">+ Jury</label><input id="ninja-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+        <div class="field jury-field hidden" id="ninja-jury-field"><label class="jury-label">+ Jury</label><input id="ninja-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
       </div>
       <button class="btn-add ninja" onclick="addEntry('ninja')">+ Dodaj</button>
       <div class="err" id="ninja-err">Wypełnij imię i wynik!</div>
-      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span></div>
+      <div class="form-footer">
+        <span class="sync-info">Synchronizacja na żywo</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="ninja-jury-toggle" onchange="toggleJury('ninja', this.checked)"/>
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Jury</span>
+        </label>
+      </div>
     </div>
     <div class="ranking-header">
       <div class="ranking-title">Wyniki Ninja Frog</div>
@@ -254,11 +278,18 @@
       <div class="form-row">
         <div class="field"><label>Imię</label><input id="toss-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
         <div class="field"><label>Wynik</label><input id="toss-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field"><label class="jury-label">+ Jury</label><input id="toss-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+        <div class="field jury-field hidden" id="toss-jury-field"><label class="jury-label">+ Jury</label><input id="toss-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
       </div>
       <button class="btn-add toss" onclick="addEntry('toss')">+ Dodaj</button>
       <div class="err" id="toss-err">Wypełnij imię i wynik!</div>
-      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span></div>
+      <div class="form-footer">
+        <span class="sync-info">Synchronizacja na żywo</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="boxer-jury-toggle" onchange="toggleJury('boxer', this.checked)"/>
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Jury</span>
+        </label>
+      </div>
     </div>
     <div class="ranking-header">
       <div class="ranking-title">Wyniki Toss</div>
@@ -273,11 +304,18 @@
       <div class="form-row">
         <div class="field"><label>Imię</label><input id="snake-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
         <div class="field"><label>Wynik</label><input id="snake-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field"><label class="jury-label">+ Jury</label><input id="snake-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+        <div class="field jury-field hidden" id="snake-jury-field"><label class="jury-label">+ Jury</label><input id="snake-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
       </div>
       <button class="btn-add snake" onclick="addEntry('snake')">+ Dodaj</button>
       <div class="err" id="snake-err">Wypełnij imię i wynik!</div>
-      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span></div>
+      <div class="form-footer">
+        <span class="sync-info">Synchronizacja na żywo</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toss-jury-toggle" onchange="toggleJury('toss', this.checked)"/>
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Jury</span>
+        </label>
+      </div>
     </div>
     <div class="ranking-header">
       <div class="ranking-title">Wyniki Snake</div>
@@ -296,7 +334,14 @@
       </div>
       <button class="btn-add snake1v1" onclick="addEntry('snake1v1')">+ Dodaj</button>
       <div class="err" id="snake1v1-err">Wypełnij imię i wynik!</div>
-      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span></div>
+      <div class="form-footer">
+        <span class="sync-info">Synchronizacja na żywo</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="snake-jury-toggle" onchange="toggleJury('snake', this.checked)"/>
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Jury</span>
+        </label>
+      </div>
     </div>
     <div class="ranking-header">
       <div class="ranking-title">Wyniki Snake 1v1</div>
@@ -311,11 +356,18 @@
       <div class="form-row">
         <div class="field"><label>Imię</label><input id="boxer-name" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
         <div class="field"><label>Wynik</label><input id="boxer-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field"><label class="jury-label">+ Jury</label><input id="boxer-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+        <div class="field jury-field hidden" id="boxer-jury-field"><label class="jury-label">+ Jury</label><input id="boxer-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
       </div>
       <button class="btn-add boxer" onclick="addEntry('boxer')">+ Dodaj</button>
       <div class="err" id="boxer-err">Wypełnij imię i wynik!</div>
-      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span></div>
+      <div class="form-footer">
+        <span class="sync-info">Synchronizacja na żywo</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="snake1v1-jury-toggle" onchange="toggleJury('snake1v1', this.checked)"/>
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Jury</span>
+        </label>
+      </div>
     </div>
     <div class="ranking-header">
       <div class="ranking-title">Wyniki Bokser</div>
@@ -448,8 +500,68 @@
     });
   }
 
+  // Toggle jury
+  window.toggleJury = function(sport, enabled) {
+    const field = document.getElementById(sport+'-jury-field');
+    if (field) field.className = 'field jury-field' + (enabled ? '' : ' hidden');
+    if (!enabled) {
+      const inp = document.getElementById(sport+'-jury');
+      if (inp) inp.value = '';
+    }
+  };
+
+  // Add match for snake1v1
+  window.addMatchEntry = function() {
+    const p1 = document.getElementById('snake1v1-p1').value.trim();
+    const p2 = document.getElementById('snake1v1-p2').value.trim();
+    const winner = document.getElementById('snake1v1-winner').value;
+    const jury = parseFloat(document.getElementById('snake1v1-jury').value) || 0;
+    const err = document.getElementById('snake1v1-err');
+    if (!p1 || !p2) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    const winnerName = winner === '1' ? p1 : p2;
+    const loserName = winner === '1' ? p2 : p1;
+    data['snake1v1'].push({ id: 'e'+Date.now(), p1, p2, winner: winnerName, loser: loserName, jury, score: 1 });
+    document.getElementById('snake1v1-p1').value = '';
+    document.getElementById('snake1v1-p2').value = '';
+    document.getElementById('snake1v1-jury').value = '';
+    document.getElementById('snake1v1-p1').focus();
+    renderSnake1v1();
+    const obj = {};
+    data['snake1v1'].forEach(e => { obj[e.id] = e; });
+    set(ref(db, 'snake1v1'), obj).catch(() => setStatus(false));
+  };
+
+  function renderSnake1v1() {
+    const entries = data['snake1v1'];
+    const n = entries.length;
+    document.getElementById('snake1v1-count').textContent = n + ' mecz' + (n===1?'':'ów');
+    const list = document.getElementById('snake1v1-list');
+    if (n===0) { list.innerHTML = '<div class="empty"><span>🐍</span>Brak meczów!</div>'; return; }
+    list.innerHTML = '';
+    entries.slice().reverse().forEach((e, i) => {
+      const jury = e.jury||0;
+      const div = document.createElement('div');
+      div.className = 'entry';
+      const juryInfo = jury ? `<span class="jury-pts"> +${fmt(jury)} jury</span>` : '';
+      div.innerHTML = \`
+        <div class="rank-badge">🐍</div>
+        <div class="entry-info" style="flex:1">
+          <div class="entry-name" style="color:#8b5cf6">\${esc(e.winner)} <span style="color:var(--muted);font-weight:400;font-size:0.8rem">wygrał</span></div>
+          <div class="entry-breakdown">vs \${esc(e.loser)}\${juryInfo}</div>
+        </div>
+        <button class="del-btn" onclick="deleteEntry('snake1v1','\${e.id}')" title="Usuń">✕</button>
+      \`;
+      list.appendChild(div);
+    });
+  }
+
+  // Override render for snake1v1
+  const origRender = render;
+
   // keyboard
   ['ninja','boxer','toss','snake','snake1v1'].forEach(sport => {
+    if (sport === 'snake1v1') return;
     document.getElementById(sport+'-name').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById(sport+'-score').focus(); });
     document.getElementById(sport+'-score').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById(sport+'-jury').focus(); });
     document.getElementById(sport+'-jury').addEventListener('keydown', e => { if(e.key==='Enter') window.addEntry(sport); });
