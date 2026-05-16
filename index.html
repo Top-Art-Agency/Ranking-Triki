@@ -7,16 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg1: #0f0c29; --bg2: #1a1a6e; --bg3: #2d1b69;
-    --accent1: #22c55e; --accent2: #86efac;
-    --accent-box1: #ef4444; --accent-box2: #b91c1c;
     --gold: #ffd166; --silver: #c0c0c0; --bronze: #cd7f32;
     --text: #f0eeff; --muted: #9991cc;
     --card: rgba(255,255,255,0.05); --border: rgba(255,255,255,0.1);
     --jury: #a78bfa;
-    --accent-toss1: #f59e0b; --accent-toss2: #d97706;
-    --accent-snake1: #10b981; --accent-snake2: #059669;
-    --accent-snake1v1a: #8b5cf6; --accent-snake1v1b: #7c3aed;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -25,364 +19,257 @@
     color: var(--text); overflow-x: hidden;
     padding-top: env(safe-area-inset-top, 16px);
   }
-  body::before, body::after {
-    content: ''; position: fixed; border-radius: 50%;
-    filter: blur(80px); opacity: 0.2; pointer-events: none; z-index: 0;
-    animation: drift 12s ease-in-out infinite alternate;
-  }
-  body::before { width: 400px; height: 400px; background: radial-gradient(circle, #f0547a, transparent); top: -100px; left: -100px; }
-  body::after { width: 400px; height: 400px; background: radial-gradient(circle, #5ec8e0, transparent); bottom: -100px; right: -100px; animation-delay: -6s; }
-  @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,20px) scale(1.08); } }
-
   .wrapper { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
 
-  /* CLEAR BTN */
   .btn-clear {
-    position: fixed; top: max(env(safe-area-inset-top, 0px) + 12px, 12px); right: 16px;
-    z-index: 100;
+    position: fixed; top: max(env(safe-area-inset-top, 0px) + 12px, 12px); right: 16px; z-index: 100;
     background: rgba(15,12,41,0.7); backdrop-filter: blur(10px);
     border: 1px solid var(--border); border-radius: 10px;
     color: var(--muted); font-size: 0.68rem; font-weight: 700;
     letter-spacing: 0.08em; text-transform: uppercase;
     padding: 8px 14px; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif;
   }
-  .btn-clear:hover { border-color: var(--accent1); color: var(--accent1); }
+  .btn-clear:hover { border-color: #ef4444; color: #ef4444; }
 
-  /* TABS */
-  .tabs {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 8px; margin-bottom: 2rem;
-  }
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
   .tab-btn {
-    height: 56px; border-radius: 16px; border: 1px solid var(--border);
+    height: 50px; border-radius: 14px; border: 1px solid var(--border);
     background: var(--card); color: var(--muted);
-    font-family: 'Orbitron', sans-serif; font-size: 1rem;
-    font-weight: 700; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s;
-    backdrop-filter: blur(10px);
+    font-family: 'Orbitron', sans-serif; font-size: 0.7rem;
+    font-weight: 700; cursor: pointer; transition: all 0.2s;
+    backdrop-filter: blur(10px); padding: 0 8px;
   }
-  .tab-btn.active-ninja {
-    background: rgba(34,197,94,0.15);
-    border-color: rgba(34,197,94,0.6); color: var(--text);
-  }
-  .tab-btn.active-toss {
-    background: rgba(245,158,11,0.15);
-    border-color: rgba(245,158,11,0.6); color: var(--text);
-  }
-  .tab-btn.active-snake {
-    background: rgba(16,185,129,0.15);
-    border-color: rgba(16,185,129,0.6); color: var(--text);
-  }
-  .tab-btn.active-snake1v1 {
-    background: rgba(139,92,246,0.15);
-    border-color: rgba(139,92,246,0.6); color: var(--text);
-  }
-  .tab-btn.active-boxer {
-    background: rgba(239,68,68,0.15);
-    border-color: rgba(239,68,68,0.6); color: var(--text);
-  }
+  .tab-btn.active-ninja  { background: rgba(34,197,94,0.15);  border-color: rgba(34,197,94,0.6);  color: #22c55e; }
+  .tab-btn.active-boxer  { background: rgba(239,68,68,0.15);  border-color: rgba(239,68,68,0.6);  color: #ef4444; }
+  .tab-btn.active-toss   { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.6); color: #f59e0b; }
+  .tab-btn.active-snake  { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.6); color: #10b981; }
+  .tab-btn.active-snake1v1 { background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.6); color: #8b5cf6; }
 
-  /* HEADER */
-  .header { text-align: center; margin-bottom: 2rem; }
-  .brand {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2.4rem, 9vw, 4.5rem);
-    letter-spacing: 0.04em; line-height: 1; font-weight: 700;
-  }
-  .brand.ninja { color: #22c55e; -webkit-text-fill-color: #22c55e; }
-  .brand.boxer { color: #ef4444; -webkit-text-fill-color: #ef4444; }
-  .brand.toss { color: #f59e0b; -webkit-text-fill-color: #f59e0b; }
-  .brand.snake { color: #10b981; -webkit-text-fill-color: #10b981; }
-  .brand.snake1v1 { color: #8b5cf6; -webkit-text-fill-color: #8b5cf6; }
-  .subtitle { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; }
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.07); border: 1px solid var(--border);
-    border-radius: 999px; padding: 4px 14px; font-size: 0.7rem;
-    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); margin-top: 0.8rem; transition: all 0.3s;
-  }
-  .status-pill.live { color: #6ee7b7; border-color: rgba(110,231,183,0.3); background: rgba(110,231,183,0.07); }
-  .status-pill.offline { color: var(--accent1); border-color: rgba(240,84,122,0.3); }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: #6ee7b7; animation: blink 1.8s ease-in-out infinite; flex-shrink: 0; }
-  .dot.off { background: var(--accent1); animation: none; }
-  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .header { text-align: center; margin-bottom: 1.5rem; }
+  .brand { font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 7vw, 3.5rem); font-weight: 900; letter-spacing: 0.04em; line-height: 1; }
+  .brand.ninja    { color: #22c55e; }
+  .brand.boxer    { color: #ef4444; }
+  .brand.toss     { color: #f59e0b; }
+  .brand.snake    { color: #10b981; }
+  .brand.snake1v1 { color: #8b5cf6; }
 
-  /* FORM */
-  .form-wrap {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 20px; padding: 1.25rem; margin-bottom: 1.5rem;
-    backdrop-filter: blur(10px);
-  }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .form-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 1.25rem; margin-bottom: 1.5rem; backdrop-filter: blur(10px); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
   .field { display: flex; flex-direction: column; gap: 5px; }
   .field label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
-  .field label.jury-label { color: var(--jury); }
+  .field input, .field select {
+    background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0 12px; height: 48px;
+    font-size: 1rem; font-family: 'Nunito', sans-serif;
+    color: var(--text); outline: none; width: 100%;
+    transition: border-color 0.2s;
+  }
+  .field select option { background: #1a1a6e; }
+  .field input::placeholder { color: rgba(255,255,255,0.25); }
+
+  .btn-add {
+    width: 100%; height: 50px; border-radius: 14px; border: none;
+    color: #fff; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800;
+    cursor: pointer; transition: transform 0.15s;
+  }
+  .btn-add:active { transform: scale(0.97); }
+  .btn-add.ninja    { background: #22c55e; }
+  .btn-add.boxer    { background: #ef4444; }
+  .btn-add.toss     { background: #f59e0b; }
+  .btn-add.snake    { background: #10b981; }
+  .btn-add.snake1v1 { background: #8b5cf6; }
+
+  .err { font-size: 0.75rem; color: #ef4444; margin-top: 6px; display: none; font-weight: 700; }
+
+  .form-footer { display: flex; align-items: center; margin-top: 0.9rem; gap: 12px; }
+  .sync-info { font-size: 0.68rem; color: var(--muted); font-weight: 700; flex: 1; }
+  .toggle-wrap { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+  .toggle-wrap input { display: none; }
+  .toggle-track { width: 36px; height: 20px; border-radius: 999px; background: rgba(255,255,255,0.15); border: 1px solid var(--border); position: relative; transition: background 0.2s; }
+  .toggle-track::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: white; transition: transform 0.2s; }
+  .toggle-wrap input:checked + .toggle-track { background: var(--jury); border-color: var(--jury); }
+  .toggle-wrap input:checked + .toggle-track::after { transform: translateX(16px); }
+  .toggle-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
   .jury-field { transition: opacity 0.2s; }
   .jury-field.hidden { opacity: 0; pointer-events: none; }
+
+  .ranking-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+  .ranking-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700; color: var(--muted); }
+  .ranking-count { font-size: 0.72rem; font-weight: 800; color: var(--muted); }
+
+  .list { display: flex; flex-direction: column; gap: 8px; }
+  .entry { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 12px 14px; backdrop-filter: blur(8px); animation: fadeSlide 0.3s ease both; }
+  @keyframes fadeSlide { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+  .entry.rank-1 { border-color: rgba(255,209,102,0.5); background: rgba(255,209,102,0.06); }
+  .entry.rank-2 { border-color: rgba(192,192,192,0.4); background: rgba(192,192,192,0.05); }
+  .entry.rank-3 { border-color: rgba(205,127,50,0.4); background: rgba(205,127,50,0.05); }
+  .rank-badge { width: 38px; height: 38px; min-width: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); flex-shrink: 0; }
+  .entry.rank-1 .rank-badge { background: rgba(255,209,102,0.15); color: var(--gold); border-color: rgba(255,209,102,0.4); font-size: 1.3rem; }
+  .entry.rank-2 .rank-badge { background: rgba(192,192,192,0.12); color: var(--silver); border-color: rgba(192,192,192,0.35); font-size: 1.3rem; }
+  .entry.rank-3 .rank-badge { background: rgba(205,127,50,0.12); color: var(--bronze); border-color: rgba(205,127,50,0.35); font-size: 1.3rem; }
+  .entry-info { flex: 1; min-width: 0; }
+  .entry-name { font-size: 1rem; font-weight: 800; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .entry-breakdown { font-size: 0.85rem; color: var(--muted); margin-top: 3px; }
+  .jury-pts { font-weight: 800; font-size: 1.2rem; color: var(--jury); }
+  .entry-score { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; flex-shrink: 0; }
+  .entry.rank-1 .entry-score { color: var(--gold) !important; }
+  .score-unit { font-size: 0.6rem; color: var(--muted); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; align-self: flex-end; margin-bottom: 5px; flex-shrink: 0; }
+  .del-btn { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.2); font-size: 0.85rem; padding: 6px 8px; border-radius: 6px; transition: all 0.15s; flex-shrink: 0; }
+  .del-btn:hover { color: #ef4444; background: rgba(239,68,68,0.12); }
+  .empty { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 0.9rem; border: 1px dashed var(--border); border-radius: 16px; }
+  .empty span { font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.4; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* sport label colors */
   .panel-ninja .field label { color: #22c55e; }
+  .panel-ninja .field label.jury-label { color: #86efac; }
+  .panel-boxer .field label { color: #ef4444; }
+  .panel-boxer .field label.jury-label { color: #fca5a5; }
   .panel-toss .field label { color: #f59e0b; }
   .panel-toss .field label.jury-label { color: #fcd34d; }
   .panel-snake .field label { color: #10b981; }
   .panel-snake .field label.jury-label { color: #6ee7b7; }
   .panel-snake1v1 .field label { color: #8b5cf6; }
   .panel-snake1v1 .field label.jury-label { color: #c4b5fd; }
-  .panel-ninja .field label { color: #22c55e; }
-  .panel-ninja .field label.jury-label { color: #86efac; }
-  .panel-boxer .field label { color: #ef4444; }
-  .panel-boxer .field label.jury-label { color: #fca5a5; }
-  .field input {
-    background: rgba(255,255,255,0.06); border: 1px solid var(--border);
-    border-radius: 12px; padding: 0 12px; height: 48px;
-    font-size: 1rem; font-family: 'Nunito', sans-serif;
-    color: var(--text); outline: none; width: 100%;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .field input::placeholder { color: rgba(255,255,255,0.25); }
-  .field input:focus { border-color: var(--accent2); background: rgba(94,200,224,0.08); }
-  .field input.jury-input:focus { border-color: var(--jury); background: rgba(167,139,250,0.08); }
 
-  .btn-add {
-    width: 100%; height: 50px; border-radius: 14px; border: none;
-    color: #fff; font-family: 'Nunito', sans-serif;
-    font-size: 1rem; font-weight: 800; cursor: pointer;
-    letter-spacing: 0.05em; transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .btn-add.ninja { background: #22c55e; box-shadow: 0 4px 20px rgba(34,197,94,0.35); }
-  .btn-add.boxer { background: #ef4444; box-shadow: 0 4px 20px rgba(239,68,68,0.35); }
-  .btn-add.toss { background: #f59e0b; box-shadow: 0 4px 20px rgba(245,158,11,0.35); }
-  .btn-add.snake { background: #10b981; box-shadow: 0 4px 20px rgba(16,185,129,0.35); }
-  .btn-add.snake1v1 { background: #8b5cf6; box-shadow: 0 4px 20px rgba(139,92,246,0.35); }
-  .btn-add:active { transform: scale(0.97); }
-  .err { font-size: 0.75rem; color: var(--accent1); margin-top: 6px; display: none; font-weight: 700; }
-  .form-footer { display: flex; align-items: center; margin-top: 0.9rem; gap: 12px; flex-wrap: wrap; }
-  .toggle-wrap { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
-  .toggle-wrap input { display: none; }
-  .toggle-track {
-    width: 36px; height: 20px; border-radius: 999px;
-    background: rgba(255,255,255,0.15); border: 1px solid var(--border);
-    position: relative; transition: background 0.2s;
-  }
-  .toggle-track::after {
-    content: ''; position: absolute; top: 2px; left: 2px;
-    width: 14px; height: 14px; border-radius: 50%;
-    background: white; transition: transform 0.2s;
-  }
-  .toggle-wrap input:checked + .toggle-track { background: var(--jury); border-color: var(--jury); }
-  .toggle-wrap input:checked + .toggle-track::after { transform: translateX(16px); }
-  .toggle-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-  .sync-info { font-size: 0.68rem; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; }
-
-  /* RANKING */
-  .ranking-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-  .ranking-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; }
-  .ranking-count { font-size: 0.72rem; font-weight: 800; color: var(--muted); letter-spacing: 0.08em; }
-  .list { display: flex; flex-direction: column; gap: 8px; }
-  .entry {
-    display: flex; align-items: center; gap: 12px;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 12px 14px; backdrop-filter: blur(8px);
-    transition: border-color 0.2s; animation: fadeSlide 0.35s ease both;
-  }
-  @keyframes fadeSlide { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-  .entry.rank-1 { border-color: rgba(255,209,102,0.5); background: rgba(255,209,102,0.06); }
-  .entry.rank-2 { border-color: rgba(192,192,192,0.4); background: rgba(192,192,192,0.05); }
-  .entry.rank-3 { border-color: rgba(205,127,50,0.4); background: rgba(205,127,50,0.05); }
-  .rank-badge {
-    width: 38px; height: 38px; min-width: 38px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700;
-    background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border);
-  }
-  .entry.rank-1 .rank-badge { background: rgba(255,209,102,0.15); color: var(--gold); border-color: rgba(255,209,102,0.4); font-size: 1.4rem; }
-  .entry.rank-2 .rank-badge { background: rgba(192,192,192,0.12); color: var(--silver); border-color: rgba(192,192,192,0.35); font-size: 1.4rem; }
-  .entry.rank-3 .rank-badge { background: rgba(205,127,50,0.12); color: var(--bronze); border-color: rgba(205,127,50,0.35); font-size: 1.4rem; }
-  .entry-info { flex: 1; min-width: 0; }
-  .entry-name { font-size: 1rem; font-weight: 800; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .entry-breakdown { font-size: 0.85rem; color: var(--muted); margin-top: 3px; }
-  .entry-breakdown .jury-pts { color: var(--jury); font-weight: 800; font-size: 1.2rem; }
-  .entry-score {
-    font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.02em; flex-shrink: 0;
-    color: #22c55e;
-  }
-  .entry-score.sport-boxer { color: #ef4444; -webkit-text-fill-color: #ef4444; }
-  .entry-score.sport-toss { color: #f59e0b; -webkit-text-fill-color: #f59e0b; }
-  .entry-score.sport-snake { color: #10b981; -webkit-text-fill-color: #10b981; }
-  .entry-score.sport-snake1v1 { color: #8b5cf6; -webkit-text-fill-color: #8b5cf6; }
-  .entry-score.sport-ninja { color: #22c55e; -webkit-text-fill-color: #22c55e; }
-  .entry.rank-1 .entry-score { color: var(--gold); -webkit-text-fill-color: var(--gold); }
-  .score-unit { font-size: 0.6rem; color: var(--muted); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; align-self: flex-end; margin-bottom: 5px; flex-shrink: 0; }
-  .del-btn { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.2); font-size: 0.85rem; padding: 6px 8px; border-radius: 6px; transition: all 0.15s; flex-shrink: 0; }
-  .del-btn:hover { color: var(--accent1); background: rgba(240,84,122,0.12); }
-  .empty { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 0.9rem; border: 1px dashed var(--border); border-radius: 16px; }
-  .empty span { font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.4; }
-
-  /* PANEL visibility */
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  @media (max-width: 480px) {
-    .form-row { grid-template-columns: 1fr 1fr; }
-    .form-row .field:first-child { grid-column: span 2; }
-  }
+  .score-ninja    { color: #22c55e; }
+  .score-boxer    { color: #ef4444; }
+  .score-toss     { color: #f59e0b; }
+  .score-snake    { color: #10b981; }
+  .score-snake1v1 { color: #8b5cf6; }
 </style>
 </head>
 <body>
 <div class="wrapper">
 
-  <button class="btn-clear" id="btnClear" onclick="clearAll()">Wyczyść</button>
+  <button class="btn-clear" onclick="clearAll()">Wyczyść</button>
 
-  <!-- TABS -->
   <div class="tabs">
-    <button class="tab-btn active-ninja" id="tab-ninja" onclick="switchTab('ninja')">Ninja Frog</button>
-    <button class="tab-btn" id="tab-boxer" onclick="switchTab('boxer')">Bokser</button>
-    <button class="tab-btn" id="tab-toss" onclick="switchTab('toss')">Toss</button>
-    <button class="tab-btn" id="tab-snake" onclick="switchTab('snake')">Snake</button>
-    <button class="tab-btn" id="tab-snake1v1" onclick="switchTab('snake1v1')">Snake 1v1</button>
+    <button class="tab-btn active-ninja" id="tab-ninja"     onclick="switchTab('ninja')">Ninja Frog</button>
+    <button class="tab-btn"             id="tab-boxer"     onclick="switchTab('boxer')">Bokser</button>
+    <button class="tab-btn"             id="tab-toss"      onclick="switchTab('toss')">Toss</button>
+    <button class="tab-btn"             id="tab-snake"     onclick="switchTab('snake')">Snake</button>
+    <button class="tab-btn"             id="tab-snake1v1"  onclick="switchTab('snake1v1')">Snake 1v1</button>
   </div>
 
-  <!-- STATUS -->
   <div class="header">
     <div class="brand ninja" id="brandLabel">Ninja Frog</div>
-
   </div>
 
-  <!-- NINJA PANEL -->
+  <!-- NINJA -->
   <div class="panel panel-ninja active" id="panel-ninja">
     <div class="form-wrap">
-      <div class="form-row">
+      <div class="form-row-3">
         <div class="field"><label>Imię</label><input id="ninja-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
-        <div class="field"><label>Wynik</label><input id="ninja-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field jury-field hidden" id="ninja-jury-field"><label class="jury-label">+ Jury</label><input id="ninja-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+        <div class="field"><label>Wynik</label><input id="ninja-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="ninja-jury-field"><label class="jury-label">+ Jury</label><input id="ninja-jury" type="number" placeholder="0" inputmode="decimal"/></div>
       </div>
       <button class="btn-add ninja" onclick="addEntry('ninja')">+ Dodaj</button>
-      <div class="err" id="ninja-err">Wypełnij imię i wynik!</div>
+      <div class="err" id="ninja-err"></div>
       <div class="form-footer">
         <span class="sync-info">Synchronizacja na żywo</span>
-        <label class="toggle-wrap">
-          <input type="checkbox" id="ninja-jury-toggle" onchange="toggleJury('ninja', this.checked)"/>
-          <span class="toggle-track"></span>
-          <span class="toggle-label">Jury</span>
-        </label>
+        <label class="toggle-wrap"><input type="checkbox" id="ninja-jury-toggle" onchange="toggleJury('ninja',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Jury</span></label>
       </div>
     </div>
-    <div class="ranking-header">
-      <div class="ranking-title">Wyniki Ninja Frog</div>
-      <div class="ranking-count" id="ninja-count">0 zawodników</div>
-    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Ninja Frog</div><div class="ranking-count" id="ninja-count">0 zawodników</div></div>
     <div class="list" id="ninja-list"><div class="empty"><span>🥷</span>Brak wyników!</div></div>
   </div>
 
-  <!-- TOSS PANEL -->
-  <div class="panel panel-toss" id="panel-toss">
+  <!-- BOKSER -->
+  <div class="panel panel-boxer" id="panel-boxer">
     <div class="form-wrap">
-      <div class="form-row">
-        <div class="field"><label>Imię</label><input id="toss-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
-        <div class="field"><label>Wynik</label><input id="toss-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field jury-field hidden" id="toss-jury-field"><label class="jury-label">+ Jury</label><input id="toss-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="boxer-name" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="boxer-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="boxer-jury-field"><label class="jury-label">+ Jury</label><input id="boxer-jury" type="number" placeholder="0" inputmode="decimal"/></div>
       </div>
-      <button class="btn-add toss" onclick="addEntry('toss')">+ Dodaj</button>
-      <div class="err" id="toss-err">Wypełnij imię i wynik!</div>
+      <button class="btn-add boxer" onclick="addEntry('boxer')">+ Dodaj</button>
+      <div class="err" id="boxer-err"></div>
       <div class="form-footer">
         <span class="sync-info">Synchronizacja na żywo</span>
-        <label class="toggle-wrap">
-          <input type="checkbox" id="boxer-jury-toggle" onchange="toggleJury('boxer', this.checked)"/>
-          <span class="toggle-track"></span>
-          <span class="toggle-label">Jury</span>
-        </label>
+        <label class="toggle-wrap"><input type="checkbox" id="boxer-jury-toggle" onchange="toggleJury('boxer',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Jury</span></label>
       </div>
     </div>
-    <div class="ranking-header">
-      <div class="ranking-title">Wyniki Toss</div>
-      <div class="ranking-count" id="toss-count">0 zawodników</div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Bokser</div><div class="ranking-count" id="boxer-count">0 zawodników</div></div>
+    <div class="list" id="boxer-list"><div class="empty"><span>🥊</span>Brak wyników!</div></div>
+  </div>
+
+  <!-- TOSS -->
+  <div class="panel panel-toss" id="panel-toss">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="toss-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="toss-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="toss-jury-field"><label class="jury-label">+ Jury</label><input id="toss-jury" type="number" placeholder="0" inputmode="decimal"/></div>
+      </div>
+      <button class="btn-add toss" onclick="addEntry('toss')">+ Dodaj</button>
+      <div class="err" id="toss-err"></div>
+      <div class="form-footer">
+        <span class="sync-info">Synchronizacja na żywo</span>
+        <label class="toggle-wrap"><input type="checkbox" id="toss-jury-toggle" onchange="toggleJury('toss',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Jury</span></label>
+      </div>
     </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Toss</div><div class="ranking-count" id="toss-count">0 zawodników</div></div>
     <div class="list" id="toss-list"><div class="empty"><span>🎯</span>Brak wyników!</div></div>
   </div>
 
-  <!-- SNAKE PANEL -->
+  <!-- SNAKE -->
   <div class="panel panel-snake" id="panel-snake">
     <div class="form-wrap">
-      <div class="form-row">
+      <div class="form-row-3">
         <div class="field"><label>Imię</label><input id="snake-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
-        <div class="field"><label>Wynik</label><input id="snake-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field jury-field hidden" id="snake-jury-field"><label class="jury-label">+ Jury</label><input id="snake-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+        <div class="field"><label>Wynik</label><input id="snake-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="snake-jury-field"><label class="jury-label">+ Jury</label><input id="snake-jury" type="number" placeholder="0" inputmode="decimal"/></div>
       </div>
       <button class="btn-add snake" onclick="addEntry('snake')">+ Dodaj</button>
-      <div class="err" id="snake-err">Wypełnij imię i wynik!</div>
+      <div class="err" id="snake-err"></div>
       <div class="form-footer">
         <span class="sync-info">Synchronizacja na żywo</span>
-        <label class="toggle-wrap">
-          <input type="checkbox" id="toss-jury-toggle" onchange="toggleJury('toss', this.checked)"/>
-          <span class="toggle-track"></span>
-          <span class="toggle-label">Jury</span>
-        </label>
+        <label class="toggle-wrap"><input type="checkbox" id="snake-jury-toggle" onchange="toggleJury('snake',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Jury</span></label>
       </div>
     </div>
-    <div class="ranking-header">
-      <div class="ranking-title">Wyniki Snake</div>
-      <div class="ranking-count" id="snake-count">0 zawodników</div>
-    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Snake</div><div class="ranking-count" id="snake-count">0 zawodników</div></div>
     <div class="list" id="snake-list"><div class="empty"><span>🐍</span>Brak wyników!</div></div>
   </div>
 
-  <!-- SNAKE 1V1 PANEL -->
+  <!-- SNAKE 1V1 -->
   <div class="panel panel-snake1v1" id="panel-snake1v1">
     <div class="form-wrap">
       <div class="form-row">
-        <div class="field"><label>Imię</label><input id="snake1v1-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
-        <div class="field"><label>Wynik</label><input id="snake1v1-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field"><label class="jury-label">+ Jury</label><input id="snake1v1-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+        <div class="field"><label>Gracz 1</label><input id="s1v1-p1" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Gracz 2</label><input id="s1v1-p2" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
       </div>
-      <button class="btn-add snake1v1" onclick="addEntry('snake1v1')">+ Dodaj</button>
-      <div class="err" id="snake1v1-err">Wypełnij imię i wynik!</div>
-      <div class="form-footer">
-        <span class="sync-info">Synchronizacja na żywo</span>
-        <label class="toggle-wrap">
-          <input type="checkbox" id="snake-jury-toggle" onchange="toggleJury('snake', this.checked)"/>
-          <span class="toggle-track"></span>
-          <span class="toggle-label">Jury</span>
-        </label>
-      </div>
-    </div>
-    <div class="ranking-header">
-      <div class="ranking-title">Wyniki Snake 1v1</div>
-      <div class="ranking-count" id="snake1v1-count">0 zawodników</div>
-    </div>
-    <div class="list" id="snake1v1-list"><div class="empty"><span>🐍</span>Brak wyników!</div></div>
-  </div>
-
-  <!-- BOXER PANEL -->
-  <div class="panel panel-boxer" id="panel-boxer">
-    <div class="form-wrap">
       <div class="form-row">
-        <div class="field"><label>Imię</label><input id="boxer-name" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
-        <div class="field"><label>Wynik</label><input id="boxer-score" type="number" placeholder="0" step="any" inputmode="decimal"/></div>
-        <div class="field jury-field hidden" id="boxer-jury-field"><label class="jury-label">+ Jury</label><input id="boxer-jury" type="number" placeholder="0" step="any" inputmode="decimal" class="jury-input"/></div>
+        <div class="field">
+          <label>Zwycięzca</label>
+          <select id="s1v1-winner">
+            <option value="1">Gracz 1</option>
+            <option value="2">Gracz 2</option>
+          </select>
+        </div>
+        <div class="field jury-field hidden" id="snake1v1-jury-field"><label class="jury-label">+ Jury</label><input id="s1v1-jury" type="number" placeholder="0" inputmode="decimal"/></div>
       </div>
-      <button class="btn-add boxer" onclick="addEntry('boxer')">+ Dodaj</button>
-      <div class="err" id="boxer-err">Wypełnij imię i wynik!</div>
+      <button class="btn-add snake1v1" onclick="addMatch()">+ Dodaj mecz</button>
+      <div class="err" id="snake1v1-err"></div>
       <div class="form-footer">
         <span class="sync-info">Synchronizacja na żywo</span>
-        <label class="toggle-wrap">
-          <input type="checkbox" id="snake1v1-jury-toggle" onchange="toggleJury('snake1v1', this.checked)"/>
-          <span class="toggle-track"></span>
-          <span class="toggle-label">Jury</span>
-        </label>
+        <label class="toggle-wrap"><input type="checkbox" id="snake1v1-jury-toggle" onchange="toggleJury('snake1v1',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Jury</span></label>
       </div>
     </div>
-    <div class="ranking-header">
-      <div class="ranking-title">Wyniki Bokser</div>
-      <div class="ranking-count" id="boxer-count">0 zawodników</div>
-    </div>
-    <div class="list" id="boxer-list"><div class="empty"><span>🥊</span>Brak wyników!</div></div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Snake 1v1</div><div class="ranking-count" id="snake1v1-count">0 meczów</div></div>
+    <div class="list" id="snake1v1-list"><div class="empty"><span>🐍</span>Brak meczów!</div></div>
   </div>
 
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-  const firebaseConfig = {
+<!-- Firebase (no module, compat version) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+  firebase.initializeApp({
     apiKey: "AIzaSyBTOosW_Gy6iO5SnRo47tYzGcGJPqbvF2E",
     authDomain: "ninja-frog-ranking.firebaseapp.com",
     databaseURL: "https://ninja-frog-ranking-default-rtdb.europe-west1.firebasedatabase.app",
@@ -390,182 +277,160 @@
     storageBucket: "ninja-frog-ranking.firebasestorage.app",
     messagingSenderId: "425653435372",
     appId: "1:425653435372:web:cb549a5773deb7b82ddec9"
-  };
+  });
+  const db = firebase.database();
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  const data = { ninja: [], boxer: [], toss: [], snake: [], snake1v1: [] };
+  const SPORTS = ['ninja','boxer','toss','snake','snake1v1'];
+  const SPORT_NAMES = { ninja:'Ninja Frog', boxer:'Bokser', toss:'Toss', snake:'Snake', snake1v1:'Snake 1v1' };
+  const SPORT_EMOJI = { ninja:'🥷', boxer:'🥊', toss:'🎯', snake:'🐍', snake1v1:'🐍' };
   let currentTab = 'ninja';
+  const data = { ninja:[], boxer:[], toss:[], snake:[], snake1v1:[] };
 
-  function setStatus(ok) {
-    const pill = document.getElementById('statusPill');
-    const dot = document.getElementById('dot');
-    const txt = document.getElementById('statusText');
-    if (ok) { pill.className = 'status-pill live'; dot.className = 'dot'; txt.textContent = 'na żywo — wszystkie urządzenia'; }
-    else { pill.className = 'status-pill offline'; dot.className = 'dot off'; txt.textContent = 'brak połączenia'; }
-  }
-
-  ['ninja','boxer','toss','snake','snake1v1'].forEach(sport => {
-    onValue(ref(db, sport), (snap) => {
-      const val = snap.val();
+  // Firebase listeners
+  SPORTS.forEach(function(sport) {
+    db.ref(sport).on('value', function(snap) {
+      var val = snap.val();
       data[sport] = val ? Object.values(val) : [];
-      data[sport].sort((a,b) => (b.score+(b.jury||0)) - (a.score+(a.jury||0)));
-      render(sport);
-      setStatus(true);
-    }, () => setStatus(false));
+      if (sport !== 'snake1v1') {
+        data[sport].sort(function(a,b){ return (b.score+(b.jury||0)) - (a.score+(a.jury||0)); });
+        render(sport);
+      } else {
+        renderMatches();
+      }
+    });
   });
 
-  function save(sport) {
-    const obj = {};
-    data[sport].forEach(e => { obj[e.id] = e; });
-    set(ref(db, sport), obj).catch(() => setStatus(false));
+  function switchTab(tab) {
+    currentTab = tab;
+    SPORTS.forEach(function(s) {
+      document.getElementById('panel-'+s).className = 'panel panel-'+s + (s===tab?' active':'');
+      document.getElementById('tab-'+s).className = 'tab-btn' + (s===tab?' active-'+s:'');
+    });
+    var brand = document.getElementById('brandLabel');
+    brand.className = 'brand ' + tab;
+    brand.textContent = SPORT_NAMES[tab];
   }
 
-  const SPORT_NAMES = { ninja: 'Ninja Frog', boxer: 'Bokser', toss: 'Toss', snake: 'Snake', snake1v1: 'Snake 1v1' };
-  const ALL_SPORTS = ['ninja','boxer','toss','snake','snake1v1'];
-  window.switchTab = function(tab) {
-    currentTab = tab;
-    ALL_SPORTS.forEach(s => {
-      document.getElementById('panel-'+s).className = 'panel panel-'+s + (tab===s ? ' active' : '');
-      document.getElementById('tab-'+s).className = 'tab-btn' + (tab===s ? ' active-'+s : '');
-    });
-    document.getElementById('brandLabel').className = 'brand ' + tab;
-    document.getElementById('brandLabel').textContent = SPORT_NAMES[tab];
-  };
+  function toggleJury(sport, on) {
+    var field = document.getElementById(sport+'-jury-field');
+    if (!field) return;
+    field.className = 'field jury-field' + (on ? '' : ' hidden');
+    if (!on) {
+      var inp = document.getElementById((sport==='snake1v1'?'s1v1':'snake1v1'===sport?'s1v1':sport)+'-jury');
+      if (sport==='snake1v1') inp = document.getElementById('s1v1-jury');
+      else inp = document.getElementById(sport+'-jury');
+      if (inp) inp.value='';
+    }
+  }
 
-  window.addEntry = function(sport) {
-    const name = document.getElementById(sport+'-name').value.trim();
-    const score = parseFloat(document.getElementById(sport+'-score').value);
-    const jury = parseFloat(document.getElementById(sport+'-jury').value) || 0;
-    const err = document.getElementById(sport+'-err');
-    if (!name || isNaN(score)) { err.style.display = 'block'; return; }
-    err.style.display = 'none';
-    data[sport].push({ id: 'e'+Date.now(), name, score, jury });
-    data[sport].sort((a,b) => (b.score+(b.jury||0)) - (a.score+(a.jury||0)));
-    document.getElementById(sport+'-name').value = '';
-    document.getElementById(sport+'-score').value = '';
-    document.getElementById(sport+'-jury').value = '';
+  function addEntry(sport) {
+    var name = document.getElementById(sport+'-name').value.trim();
+    var score = parseFloat(document.getElementById(sport+'-score').value);
+    var juryEl = document.getElementById(sport+'-jury');
+    var jury = juryEl ? (parseFloat(juryEl.value)||0) : 0;
+    var err = document.getElementById(sport+'-err');
+    if (!name || isNaN(score)) { err.textContent='Wypełnij imię i wynik!'; err.style.display='block'; return; }
+    err.style.display='none';
+    var entry = { id:'e'+Date.now(), name:name, score:score, jury:jury };
+    data[sport].push(entry);
+    data[sport].sort(function(a,b){ return (b.score+(b.jury||0))-(a.score+(a.jury||0)); });
+    document.getElementById(sport+'-name').value='';
+    document.getElementById(sport+'-score').value='';
+    if (juryEl) juryEl.value='';
     document.getElementById(sport+'-name').focus();
     render(sport);
-    save(sport);
-  };
+    var obj={};
+    data[sport].forEach(function(e){ obj[e.id]=e; });
+    db.ref(sport).set(obj);
+  }
 
-  window.deleteEntry = function(sport, id) {
-    data[sport] = data[sport].filter(e => e.id !== id);
-    render(sport);
-    save(sport);
-  };
+  function addMatch() {
+    var p1 = document.getElementById('s1v1-p1').value.trim();
+    var p2 = document.getElementById('s1v1-p2').value.trim();
+    var winner = document.getElementById('s1v1-winner').value;
+    var jury = parseFloat(document.getElementById('s1v1-jury').value)||0;
+    var err = document.getElementById('snake1v1-err');
+    if (!p1||!p2) { err.textContent='Wypełnij obu graczy!'; err.style.display='block'; return; }
+    err.style.display='none';
+    var winName = winner==='1'?p1:p2;
+    var loseName = winner==='1'?p2:p1;
+    var entry = { id:'e'+Date.now(), p1:p1, p2:p2, winner:winName, loser:loseName, jury:jury };
+    data['snake1v1'].push(entry);
+    document.getElementById('s1v1-p1').value='';
+    document.getElementById('s1v1-p2').value='';
+    document.getElementById('s1v1-jury').value='';
+    document.getElementById('s1v1-p1').focus();
+    renderMatches();
+    var obj={};
+    data['snake1v1'].forEach(function(e){ obj[e.id]=e; });
+    db.ref('snake1v1').set(obj);
+  }
 
-  window.clearAll = function() {
-    if (!confirm('Wyczyścić ranking ' + (SPORT_NAMES[currentTab]||currentTab) + '?')) return;
-    data[currentTab] = [];
-    render(currentTab);
-    set(ref(db, currentTab), null);
-  };
+  function deleteEntry(sport, id) {
+    data[sport] = data[sport].filter(function(e){ return e.id!==id; });
+    if (sport==='snake1v1') renderMatches(); else render(sport);
+    var obj={};
+    data[sport].forEach(function(e){ obj[e.id]=e; });
+    db.ref(sport).set(Object.keys(obj).length?obj:null);
+  }
 
-  const MEDALS = ['🥇','🥈','🥉'];
+  function clearAll() {
+    if (!confirm('Wyczyścić ranking '+SPORT_NAMES[currentTab]+'?')) return;
+    data[currentTab]=[];
+    if (currentTab==='snake1v1') renderMatches(); else render(currentTab);
+    db.ref(currentTab).set(null);
+  }
+
   function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function fmt(s) { return Number.isInteger(s) ? s : parseFloat(s.toFixed(2)); }
+  function fmt(s) { return Number.isInteger(s)?s:parseFloat(s.toFixed(2)); }
+  var MEDALS=['🥇','🥈','🥉'];
 
   function render(sport) {
-    const entries = data[sport];
-    const n = entries.length;
-    document.getElementById(sport+'-count').textContent = n + ' zawodnik' + (n===1?'':'ów');
-    const list = document.getElementById(sport+'-list');
-    if (n===0) {
-      list.innerHTML = '<div class="empty"><span>'+(sport==='ninja'?'🥷':'🥊')+'</span>Brak wyników!</div>';
-      return;
-    }
-    list.innerHTML = '';
-    entries.forEach((e,i) => {
-      const rank = i+1;
-      const jury = e.jury||0;
-      const total = e.score + jury;
-      const div = document.createElement('div');
-      div.className = 'entry'+(rank<=3?' rank-'+rank:'');
-      const breakdown = jury!==0 ? `<div class="entry-breakdown">${fmt(e.score)} pkt + <span class="jury-pts">+${fmt(jury)} jury</span></div>` : '';
-      const scoreClass = rank===1 ? 'entry-score' : 'entry-score sport-'+sport;
-      div.innerHTML = `
-        <div class="rank-badge">${rank<=3?MEDALS[i]:rank}</div>
-        <div class="entry-info">
-          <div class="entry-name">${esc(e.name)}</div>
-          ${breakdown}
-        </div>
-        <div class="${scoreClass}">${fmt(total)}</div>
-        <div class="score-unit">pkt</div>
-        <button class="del-btn" onclick="deleteEntry('${sport}','${e.id}')" title="Usuń">✕</button>
-      `;
+    var entries = data[sport];
+    var n = entries.length;
+    document.getElementById(sport+'-count').textContent = n+' zawodnik'+(n===1?'':'ów');
+    var list = document.getElementById(sport+'-list');
+    if (!n) { list.innerHTML='<div class="empty"><span>'+SPORT_EMOJI[sport]+'</span>Brak wyników!</div>'; return; }
+    list.innerHTML='';
+    entries.forEach(function(e,i) {
+      var rank=i+1;
+      var jury=e.jury||0;
+      var total=e.score+jury;
+      var div=document.createElement('div');
+      div.className='entry'+(rank<=3?' rank-'+rank:'');
+      var badge=rank<=3?MEDALS[i]:rank;
+      var breakdown=jury?'<div class="entry-breakdown">'+fmt(e.score)+' pkt + <span class="jury-pts">+'+fmt(jury)+' jury</span></div>':'';
+      var scoreColor=rank===1?'':' score-'+sport;
+      div.innerHTML='<div class="rank-badge">'+badge+'</div>'
+        +'<div class="entry-info"><div class="entry-name">'+esc(e.name)+'</div>'+breakdown+'</div>'
+        +'<div class="entry-score'+scoreColor+'">'+fmt(total)+'</div>'
+        +'<div class="score-unit">pkt</div>'
+        +'<button class="del-btn" onclick="deleteEntry(''+sport+'',''+e.id+'')">✕</button>';
       list.appendChild(div);
     });
   }
 
-  // Toggle jury
-  window.toggleJury = function(sport, enabled) {
-    const field = document.getElementById(sport+'-jury-field');
-    if (field) field.className = 'field jury-field' + (enabled ? '' : ' hidden');
-    if (!enabled) {
-      const inp = document.getElementById(sport+'-jury');
-      if (inp) inp.value = '';
-    }
-  };
-
-  // Add match for snake1v1
-  window.addMatchEntry = function() {
-    const p1 = document.getElementById('snake1v1-p1').value.trim();
-    const p2 = document.getElementById('snake1v1-p2').value.trim();
-    const winner = document.getElementById('snake1v1-winner').value;
-    const jury = parseFloat(document.getElementById('snake1v1-jury').value) || 0;
-    const err = document.getElementById('snake1v1-err');
-    if (!p1 || !p2) { err.style.display = 'block'; return; }
-    err.style.display = 'none';
-    const winnerName = winner === '1' ? p1 : p2;
-    const loserName = winner === '1' ? p2 : p1;
-    data['snake1v1'].push({ id: 'e'+Date.now(), p1, p2, winner: winnerName, loser: loserName, jury, score: 1 });
-    document.getElementById('snake1v1-p1').value = '';
-    document.getElementById('snake1v1-p2').value = '';
-    document.getElementById('snake1v1-jury').value = '';
-    document.getElementById('snake1v1-p1').focus();
-    renderSnake1v1();
-    const obj = {};
-    data['snake1v1'].forEach(e => { obj[e.id] = e; });
-    set(ref(db, 'snake1v1'), obj).catch(() => setStatus(false));
-  };
-
-  function renderSnake1v1() {
-    const entries = data['snake1v1'];
-    const n = entries.length;
-    document.getElementById('snake1v1-count').textContent = n + ' mecz' + (n===1?'':'ów');
-    const list = document.getElementById('snake1v1-list');
-    if (n===0) { list.innerHTML = '<div class="empty"><span>🐍</span>Brak meczów!</div>'; return; }
-    list.innerHTML = '';
-    entries.slice().reverse().forEach((e, i) => {
-      const jury = e.jury||0;
-      const div = document.createElement('div');
-      div.className = 'entry';
-      const juryInfo = jury ? `<span class="jury-pts"> +${fmt(jury)} jury</span>` : '';
-      div.innerHTML = \`
-        <div class="rank-badge">🐍</div>
-        <div class="entry-info" style="flex:1">
-          <div class="entry-name" style="color:#8b5cf6">\${esc(e.winner)} <span style="color:var(--muted);font-weight:400;font-size:0.8rem">wygrał</span></div>
-          <div class="entry-breakdown">vs \${esc(e.loser)}\${juryInfo}</div>
-        </div>
-        <button class="del-btn" onclick="deleteEntry('snake1v1','\${e.id}')" title="Usuń">✕</button>
-      \`;
+  function renderMatches() {
+    var entries = data['snake1v1'];
+    var n = entries.length;
+    document.getElementById('snake1v1-count').textContent = n+' mecz'+(n===1?'':'ów');
+    var list = document.getElementById('snake1v1-list');
+    if (!n) { list.innerHTML='<div class="empty"><span>🐍</span>Brak meczów!</div>'; return; }
+    list.innerHTML='';
+    entries.slice().reverse().forEach(function(e) {
+      var div=document.createElement('div');
+      div.className='entry';
+      var jury=e.jury||0;
+      var juryInfo=jury?'<span class="jury-pts"> +'+fmt(jury)+' jury</span>':'';
+      div.innerHTML='<div class="rank-badge">🐍</div>'
+        +'<div class="entry-info">'
+        +'<div class="entry-name" style="color:#8b5cf6">'+esc(e.winner)+' <span style="color:var(--muted);font-weight:400;font-size:0.8rem">wygrał</span></div>'
+        +'<div class="entry-breakdown">vs '+esc(e.loser)+juryInfo+'</div>'
+        +'</div>'
+        +'<button class="del-btn" onclick="deleteEntry('snake1v1',''+e.id+'')">✕</button>';
       list.appendChild(div);
     });
   }
-
-  // Override render for snake1v1
-  const origRender = render;
-
-  // keyboard
-  ['ninja','boxer','toss','snake','snake1v1'].forEach(sport => {
-    if (sport === 'snake1v1') return;
-    document.getElementById(sport+'-name').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById(sport+'-score').focus(); });
-    document.getElementById(sport+'-score').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById(sport+'-jury').focus(); });
-    document.getElementById(sport+'-jury').addEventListener('keydown', e => { if(e.key==='Enter') window.addEntry(sport); });
-  });
 </script>
 </body>
 </html>
