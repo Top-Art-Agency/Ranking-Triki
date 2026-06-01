@@ -264,11 +264,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
   </div>
 
 </div>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-firebase.initializeApp({apiKey:"AIzaSyBTOosW_Gy6iO5SnRo47tYzGcGJPqbvF2E",authDomain:"ninja-frog-ranking.firebaseapp.com",databaseURL:"https://ninja-frog-ranking-default-rtdb.europe-west1.firebasedatabase.app",projectId:"ninja-frog-ranking",storageBucket:"ninja-frog-ranking.firebasestorage.app",messagingSenderId:"425653435372",appId:"1:425653435372:web:cb549a5773deb7b82ddec9"});
-var db=firebase.database();
 var ALL_TABS=['instrukcja','wnioski','ninja','boxer','toss','snake','snake1v1'];
 var RANKING_SPORTS=['ninja','boxer','toss','snake','snake1v1'];
 var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',boxer:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1'};
@@ -277,15 +273,30 @@ var MEDALS=['🥇','🥈','🥉'];
 var currentTab='instrukcja';
 var data={ninja:[],boxer:[],toss:[],snake:[],snake1v1:[]};
 
-RANKING_SPORTS.forEach(function(sport){
-  db.ref(sport).on('value',function(snap){
-    var val=snap.val();
-    data[sport]=val?Object.values(val):[];
-    if(sport!=='snake1v1'){data[sport].sort(function(a,b){return b.score-a.score;});render(sport);}
-    else{renderMatches();}
+var DB_URL='https://ninja-frog-ranking-default-rtdb.europe-west1.firebasedatabase.app';
+function putDB(key,val){fetch(DB_URL+'/'+key+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(val)}).catch(function(){});}
+var POLL_MS=4000;
+
+function fetchDB(key,cb){
+  fetch(DB_URL+'/'+key+'.json')
+    .then(function(r){return r.json();})
+    .then(function(val){cb(val);})
+    .catch(function(){cb(null);});
+}
+
+function pollAll(){
+  RANKING_SPORTS.forEach(function(sport){
+    fetchDB(sport,function(val){
+      data[sport]=val?Object.values(val):[];
+      if(sport!=='snake1v1'){data[sport].sort(function(a,b){return b.score-a.score;});render(sport);}
+      else{renderMatches();}
+    });
   });
-});
-db.ref('feedback').on('value',function(snap){renderFeedback(snap.val()?Object.values(snap.val()):[]);});
+  fetchDB('feedback',function(val){renderFeedback(val?Object.values(val):[]);});
+}
+
+pollAll();
+setInterval(pollAll,POLL_MS);
 
 function switchTab(tab){
   currentTab=tab;
@@ -313,7 +324,7 @@ function addEntry(sport){
   data[sport].sort(function(a,b){return b.score-a.score;});
   document.getElementById(sport+'-name').value='';document.getElementById(sport+'-score').value='';
   if(juryEl)juryEl.value='';document.getElementById(sport+'-name').focus();
-  render(sport);var obj={};data[sport].forEach(function(e){obj[e.id]=e;});db.ref(sport).set(obj);
+  render(sport);var obj={};data[sport].forEach(function(e){obj[e.id]=e;});putDB(sport,obj);
 }
 function addMatch(){
   var p1=document.getElementById('s1v1-p1').value.trim();var p2=document.getElementById('s1v1-p2').value.trim();
@@ -326,25 +337,25 @@ function addMatch(){
   data['snake1v1'].push(entry);
   document.getElementById('s1v1-p1').value='';document.getElementById('s1v1-p2').value='';document.getElementById('s1v1-jury').value='';
   document.getElementById('s1v1-p1').focus();renderMatches();
-  var obj={};data['snake1v1'].forEach(function(e){obj[e.id]=e;});db.ref('snake1v1').set(obj);
+  var obj={};data['snake1v1'].forEach(function(e){obj[e.id]=e;});putDB('snake1v1',obj);
 }
 function addFeedback(){
   var name=document.getElementById('fb-name').value.trim();var text=document.getElementById('fb-text').value.trim();
   var err=document.getElementById('fb-err');
   if(!name||!text){err.textContent='Wpisz imie i opinie!';err.style.display='block';return;}
   err.style.display='none';var id='f'+Date.now();
-  db.ref('feedback/'+id).set({id:id,name:name,text:text,ts:Date.now()});
+  putDB('feedback/'+id,{id:id,name:name,text:text,ts:Date.now()});
   document.getElementById('fb-name').value='';document.getElementById('fb-text').value='';
 }
 function deleteEntry(sport,id){
   data[sport]=data[sport].filter(function(e){return e.id!==id;});
   if(sport==='snake1v1')renderMatches();else render(sport);
-  var obj={};data[sport].forEach(function(e){obj[e.id]=e;});db.ref(sport).set(Object.keys(obj).length?obj:null);
+  var obj={};data[sport].forEach(function(e){obj[e.id]=e;});putDB(sport,Object.keys(obj).length?obj:null);
 }
 function clearAll(){
   if(currentTab==='instrukcja'||currentTab==='wnioski')return;
   if(!confirm('Wyczyscic ranking '+NAMES[currentTab]+'?'))return;
-  data[currentTab]=[];if(currentTab==='snake1v1')renderMatches();else render(currentTab);db.ref(currentTab).set(null);
+  data[currentTab]=[];if(currentTab==='snake1v1')renderMatches();else render(currentTab);putDB(currentTab,null);
 }
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function fmt(s){return Number.isInteger(s)?s:parseFloat(s.toFixed(2));}
