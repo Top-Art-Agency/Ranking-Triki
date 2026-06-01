@@ -16,7 +16,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .tab-btn{height:50px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-family:'Orbitron',sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(10px);padding:0 6px;}
 .tab-btn.active-instrukcja,.tab-btn.active-wnioski{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.4);color:#f0eeff;}
 .tab-btn.active-ninja{background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.6);color:#22c55e;}
-.tab-btn.active-boxer{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.6);color:#ef4444;}
+.tab-btn.active-bokser{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.6);color:#ef4444;}
 .tab-btn.active-toss{background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.6);color:#f59e0b;}
 .tab-btn.active-snake{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.6);color:#10b981;}
 .tab-btn.active-snake1v1{background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.6);color:#8b5cf6;}
@@ -72,11 +72,11 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .empty span{font-size:2rem;display:block;margin-bottom:0.5rem;opacity:0.4;}
 .panel{display:none;}.panel.active{display:block;}
 .panel-ninja .field label{color:#22c55e;}.panel-ninja .field label.jury-label{color:#86efac;}
-.panel-boxer .field label{color:#ef4444;}.panel-boxer .field label.jury-label{color:#fca5a5;}
+.panel-bokser .field label{color:#ef4444;}.panel-bokser .field label.jury-label{color:#fca5a5;}
 .panel-toss .field label{color:#f59e0b;}.panel-toss .field label.jury-label{color:#fcd34d;}
 .panel-snake .field label{color:#10b981;}.panel-snake .field label.jury-label{color:#6ee7b7;}
 .panel-snake1v1 .field label{color:#8b5cf6;}.panel-snake1v1 .field label.jury-label{color:#c4b5fd;}
-.score-ninja{color:#22c55e}.score-boxer{color:#ef4444}.score-toss{color:#f59e0b}.score-snake{color:#10b981}.score-snake1v1{color:#8b5cf6}
+.score-ninja{color:#22c55e}.score-bokser{color:#ef4444}.score-toss{color:#f59e0b}.score-snake{color:#10b981}.score-snake1v1{color:#8b5cf6}
 .instr-tip{background:rgba(255,255,255,0.04);border-radius:10px;padding:0.9rem 1rem;font-size:0.85rem;color:var(--muted);border:1px solid var(--border);margin-bottom:1rem;}
 .instr-tip strong{color:var(--text);}
 .instr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
@@ -86,7 +86,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .instr-card ol li{font-size:0.9rem;color:var(--text);margin-bottom:0.5rem;line-height:1.4;}
 .instr-card ol li strong{color:white;}
 .instr-ninja{border-color:rgba(34,197,94,0.4);}.instr-ninja h3{color:#22c55e;}
-.instr-boxer{border-color:rgba(239,68,68,0.4);}.instr-boxer h3{color:#ef4444;}
+.instr-bokser{border-color:rgba(239,68,68,0.4);}.instr-bokser h3{color:#ef4444;}
 .instr-toss{border-color:rgba(245,158,11,0.4);}.instr-toss h3{color:#f59e0b;}
 .instr-snake{border-color:rgba(16,185,129,0.4);}.instr-snake h3{color:#10b981;}
 .instr-snake1v1{border-color:rgba(139,92,246,0.4);grid-column:span 2;}.instr-snake1v1 h3{color:#8b5cf6;}
@@ -108,7 +108,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
     <button class="tab-btn active-instrukcja" id="tab-instrukcja" onclick="switchTab('instrukcja')">📋 Instrukcja</button>
     <button class="tab-btn" id="tab-wnioski" onclick="switchTab('wnioski')">💬 Wnioski</button>
     <button class="tab-btn" id="tab-ninja" onclick="switchTab('ninja')">Ninja Frog</button>
-    <button class="tab-btn" id="tab-boxer" onclick="switchTab('boxer')">Bokser</button>
+    <button class="tab-btn" id="tab-bokser" onclick="switchTab('bokser')">Bokser</button>
     <button class="tab-btn" id="tab-toss" onclick="switchTab('toss')">Toss</button>
     <button class="tab-btn" id="tab-snake" onclick="switchTab('snake')">Snake</button>
     <button class="tab-btn" id="tab-snake1v1" onclick="switchTab('snake1v1')">Snake 1v1</button>
@@ -118,7 +118,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
   <div class="panel panel-instrukcja active" id="panel-instrukcja">
     <div class="instr-tip">💡 <strong>Jak to działa?</strong> Zagraj w grę, zeskanuj kod QR i wpisz swój wynik w odpowiedniej zakładce. Wygrywa osoba z najwyższym wynikiem!</div>
     <div class="instr-grid">
-      <div class="instr-card instr-boxer">
+      <div class="instr-card instr-bokser">
         
         <h3>🥊 Bokser</h3>
         <ol>
@@ -200,19 +200,19 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
     <div class="list" id="ninja-list"><div class="empty"><span>🥷</span>Brak wyników!</div></div>
   </div>
 
-  <div class="panel panel-boxer" id="panel-boxer">
+  <div class="panel panel-bokser" id="panel-bokser">
     <div class="form-wrap">
       <div class="form-row-3">
-        <div class="field"><label>Imię</label><input id="boxer-name" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
-        <div class="field"><label>Wynik</label><input id="boxer-score" type="number" placeholder="0" inputmode="decimal"/></div>
-        <div class="field jury-field hidden" id="boxer-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="boxer-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+        <div class="field"><label>Imię</label><input id="bokser-name" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="bokser-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="bokser-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="bokser-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
       </div>
-      <button class="btn-add boxer" onclick="addEntry('boxer')">+ Dodaj</button>
-      <div class="err" id="boxer-err"></div>
-      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="boxer-jury-toggle" onchange="toggleJury('boxer',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+      <button class="btn-add boxer" onclick="addEntry('bokser')">+ Dodaj</button>
+      <div class="err" id="bokser-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="bokser-jury-toggle" onchange="toggleJury('bokser',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
     </div>
-    <div class="ranking-header"><div class="ranking-title">Wyniki Bokser</div><div class="ranking-count" id="boxer-count">0 zawodników</div></div>
-    <div class="list" id="boxer-list"><div class="empty"><span>🥊</span>Brak wyników!</div></div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Bokser</div><div class="ranking-count" id="bokser-count">0 zawodników</div></div>
+    <div class="list" id="bokser-list"><div class="empty"><span>🥊</span>Brak wyników!</div></div>
   </div>
 
   <div class="panel panel-toss" id="panel-toss">
@@ -265,13 +265,13 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 
 </div>
 <script>
-var ALL_TABS=['instrukcja','wnioski','ninja','boxer','toss','snake','snake1v1'];
-var RANKING_SPORTS=['ninja','boxer','toss','snake','snake1v1'];
-var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',boxer:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1'};
-var EMOJI={ninja:'🥷',boxer:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍'};
+var ALL_TABS=['instrukcja','wnioski','ninja','bokser','toss','snake','snake1v1'];
+var RANKING_SPORTS=['ninja','bokser','toss','snake','snake1v1'];
+var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1'};
+var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍'};
 var MEDALS=['🥇','🥈','🥉'];
 var currentTab='instrukcja';
-var data={ninja:[],boxer:[],toss:[],snake:[],snake1v1:[]};
+var data={ninja:[],bokser:[],toss:[],snake:[],snake1v1:[]};
 
 var DB_URL='https://ninja-frog-ranking-default-rtdb.europe-west1.firebasedatabase.app';
 function putDB(key,val){fetch(DB_URL+'/'+key+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(val)}).catch(function(){});}
