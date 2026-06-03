@@ -284,15 +284,26 @@ function fetchDB(key,cb){
     .catch(function(){cb(null);});
 }
 
+var lastHash={};
+function hashVal(val){return JSON.stringify(val);}
+
 function pollAll(){
   RANKING_SPORTS.forEach(function(sport){
     fetchDB(sport,function(val){
+      var h=hashVal(val);
+      if(h===lastHash[sport])return;
+      lastHash[sport]=h;
       data[sport]=val?Object.values(val):[];
       if(sport!=='snake1v1'){data[sport].sort(function(a,b){return b.score-a.score;});render(sport);}
       else{renderMatches();}
     });
   });
-  fetchDB('feedback',function(val){renderFeedback(val?Object.values(val):[]);});
+  fetchDB('feedback',function(val){
+    var h=hashVal(val);
+    if(h===lastHash['feedback'])return;
+    lastHash['feedback']=h;
+    renderFeedback(val?Object.values(val):[]);
+  });
 }
 
 pollAll();
