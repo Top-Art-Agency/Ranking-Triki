@@ -23,7 +23,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .header{text-align:center;margin-bottom:1.5rem;}
 .brand{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,7vw,3.5rem);font-weight:900;letter-spacing:0.04em;line-height:1;}
 .brand.instrukcja,.brand.wnioski{color:#f0eeff;}
-.brand.ninja{color:#22c55e;}.brand.boxer{color:#ef4444;}.brand.toss{color:#f59e0b;}.brand.snake{color:#10b981;}.brand.snake1v1{color:#8b5cf6;}
+.brand.ninja{color:#22c55e;}.brand.boxer{color:#ef4444;}.brand.toss{color:#f59e0b;}.brand.snake{color:#10b981;}.brand.snake1v1{color:#8b5cf6;}.brand.pilka{color:#f97316;}
 .form-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.25rem;margin-bottom:1.5rem;backdrop-filter:blur(10px);}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
 .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;}
@@ -34,7 +34,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .field input::placeholder{color:rgba(255,255,255,0.25);}
 .btn-add{width:100%;height:50px;border-radius:14px;border:none;color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:transform 0.15s;}
 .btn-add:active{transform:scale(0.97);}
-.btn-add.ninja{background:#22c55e;}.btn-add.boxer{background:#ef4444;}.btn-add.toss{background:#f59e0b;}.btn-add.snake{background:#10b981;}.btn-add.snake1v1{background:#8b5cf6;}.btn-add.fb{background:var(--zappka);}
+.btn-add.ninja{background:#22c55e;}.btn-add.boxer{background:#ef4444;}.btn-add.toss{background:#f59e0b;}.btn-add.snake{background:#10b981;}.btn-add.snake1v1{background:#8b5cf6;}.btn-add.pilka{background:#f97316;}.btn-add.fb{background:var(--zappka);}
 .err{font-size:0.75rem;color:#ef4444;margin-top:6px;display:none;font-weight:700;}
 .form-footer{display:flex;align-items:center;margin-top:0.9rem;gap:12px;}
 .sync-info{font-size:0.68rem;color:var(--muted);font-weight:700;flex:1;}
@@ -75,8 +75,8 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .panel-bokser .field label{color:#ef4444;}.panel-bokser .field label.jury-label{color:#fca5a5;}
 .panel-toss .field label{color:#f59e0b;}.panel-toss .field label.jury-label{color:#fcd34d;}
 .panel-snake .field label{color:#10b981;}.panel-snake .field label.jury-label{color:#6ee7b7;}
-.panel-snake1v1 .field label{color:#8b5cf6;}.panel-snake1v1 .field label.jury-label{color:#c4b5fd;}
-.score-ninja{color:#22c55e}.score-bokser{color:#ef4444}.score-toss{color:#f59e0b}.score-snake{color:#10b981}.score-snake1v1{color:#8b5cf6}
+.panel-snake1v1 .field label{color:#8b5cf6;}.panel-snake1v1 .field label.jury-label{color:#c4b5fd;}.panel-pilka .field label{color:#f97316;}.panel-pilka .field label.jury-label{color:#fed7aa;}
+.score-ninja{color:#22c55e}.score-bokser{color:#ef4444}.score-toss{color:#f59e0b}.score-snake{color:#10b981}.score-snake1v1{color:#8b5cf6}.score-pilka{color:#f97316}
 .instr-tip{background:rgba(255,255,255,0.04);border-radius:10px;padding:0.9rem 1rem;font-size:0.85rem;color:var(--muted);border:1px solid var(--border);margin-bottom:1rem;}
 .instr-tip strong{color:var(--text);}
 .instr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
@@ -112,6 +112,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
     <button class="tab-btn" id="tab-toss" onclick="switchTab('toss')">Toss</button>
     <button class="tab-btn" id="tab-snake" onclick="switchTab('snake')">Snake</button>
     <button class="tab-btn" id="tab-snake1v1" onclick="switchTab('snake1v1')">Snake 1v1</button>
+    <button class="tab-btn" id="tab-pilka" onclick="switchTab('pilka')">⚽ Piłka Nożna</button>
   </div>
   <div class="header"><div class="brand instrukcja" id="brandLabel">Instrukcja</div></div>
 
@@ -265,13 +266,13 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 
 </div>
 <script>
-var ALL_TABS=['instrukcja','wnioski','ninja','bokser','toss','snake','snake1v1'];
-var RANKING_SPORTS=['ninja','bokser','toss','snake','snake1v1'];
-var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1'};
+var ALL_TABS=['instrukcja','wnioski','ninja','bokser','toss','snake','snake1v1','pilka'];
+var RANKING_SPORTS=['ninja','bokser','toss','snake','snake1v1','pilka'];
+var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1',pilka:'Piłka Nożna'};
 var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍'};
 var MEDALS=['🥇','🥈','🥉'];
 var currentTab='instrukcja';
-var data={ninja:[],bokser:[],toss:[],snake:[],snake1v1:[]};
+var data={ninja:[],bokser:[],toss:[],snake:[],snake1v1:[],pilka:[]};
 
 var DB_URL='https://ninja-frog-ranking-default-rtdb.europe-west1.firebasedatabase.app';
 function putDB(key,val){fetch(DB_URL+'/'+key+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(val)}).catch(function(){});}
