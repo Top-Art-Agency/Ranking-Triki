@@ -20,6 +20,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .tab-btn.active-toss{background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.6);color:#f59e0b;}
 .tab-btn.active-snake{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.6);color:#10b981;}
 .tab-btn.active-snake1v1{background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.6);color:#8b5cf6;}
+.tab-btn.active-pilka{background:rgba(249,115,22,0.15);border-color:rgba(249,115,22,0.6);color:#f97316;}
 .header{text-align:center;margin-bottom:1.5rem;}
 .brand{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,7vw,3.5rem);font-weight:900;letter-spacing:0.04em;line-height:1;}
 .brand.instrukcja,.brand.wnioski{color:#f0eeff;}
@@ -264,12 +265,27 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
     <div class="list" id="snake1v1-list"><div class="empty"><span>🐍</span>Brak meczow!</div></div>
   </div>
 
+  <div class="panel panel-pilka" id="panel-pilka">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="pilka-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="pilka-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="pilka-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="pilka-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+      </div>
+      <button class="btn-add pilka" onclick="addEntry('pilka')">+ Dodaj</button>
+      <div class="err" id="pilka-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="pilka-jury-toggle" onchange="toggleJury('pilka',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Piłka Nożna</div><div class="ranking-count" id="pilka-count">0 zawodnikow</div></div>
+    <div class="list" id="pilka-list"><div class="empty"><span>⚽</span>Brak wynikow!</div></div>
+  </div>
+
 </div>
 <script>
 var ALL_TABS=['instrukcja','wnioski','ninja','bokser','toss','snake','snake1v1','pilka'];
 var RANKING_SPORTS=['ninja','bokser','toss','snake','snake1v1','pilka'];
 var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1',pilka:'Piłka Nożna'};
-var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍'};
+var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍',pilka:'⚽'};
 var MEDALS=['🥇','🥈','🥉'];
 var currentTab='instrukcja';
 var data={ninja:[],bokser:[],toss:[],snake:[],snake1v1:[],pilka:[]};
