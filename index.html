@@ -434,29 +434,62 @@ function renderFeedback(items){
 }
 
 function exportRaport() {
-  var lines = ['Gra,Miejsce,Imie,Wynik,Zappka'];
-  var games = ['ninja','bokser','toss','snake','pilka'];
-  var gameNames = {ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',pilka:'Pilka Nozna'};
+  // Load SheetJS dynamically
+  var script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  script.onload = function() { doExport(); };
+  document.head.appendChild(script);
+}
+
+function doExport() {
+  var XLSX = window.XLSX;
+  var wb = XLSX.utils.book_new();
+  var gameNames = {ninja:'Ninja Frog', bokser:'Bokser', toss:'Toss', snake:'Snake', snake1v1:'Snake 1v1', pilka:'Piłka Nożna'};
+  var games = ['ninja','bokser','toss','snake','snake1v1','pilka'];
+
+  // ── ARKUSZ PODSUMOWANIE ──
+  var summaryData = [['Gra','Liczba zawodników','Najwyższy wynik','Zwycięzca']];
   games.forEach(function(g) {
     var entries = data[g] || [];
-    entries.forEach(function(e, i) {
-      var zappka = e.jury ? e.jury : '';
-      lines.push([gameNames[g], i+1, '"'+e.name+'"', e.score, zappka].join(','));
-    });
+    if(g === 'snake1v1') {
+      var wins = {};
+      entries.forEach(function(m){ if(m.winner) wins[m.winner]=(wins[m.winner]||0)+1; });
+      var top = Object.entries(wins).sort(function(a,b){return b[1]-a[1];})[0];
+      summaryData.push([gameNames[g], entries.length, top?top[1]+' wygranych':'-', top?top[0]:'-']);
+    } else {
+      var sorted = entries.slice().sort(function(a,b){return b.score-a.score;});
+      summaryData.push([gameNames[g], sorted.length, sorted[0]?sorted[0].score:'-', sorted[0]?sorted[0].name:'-']);
+    }
   });
-  // Snake 1v1 matches
-  var matches = data['snake1v1'] || [];
-  matches.forEach(function(m, i) {
-    lines.push(['Snake 1v1', i+1, '"'+(m.winner||'')+' vs '+(m.loser||'')+'"', m.winner ? 'WIN' : '', ''].join(','));
+  var wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+  wsSummary['!cols'] = [{wch:20},{wch:20},{wch:18},{wch:25}];
+  XLSX.utils.book_append_sheet(wb, wsSummary, 'Podsumowanie');
+
+  // ── ARKUSZE PER GRA ──
+  games.forEach(function(g) {
+    var entries = data[g] || [];
+    var rows;
+    if(g === 'snake1v1') {
+      rows = [['Miejsce','Zawodnik','Wygrane']];
+      var wins = {};
+      entries.forEach(function(m){ if(m.winner) wins[m.winner]=(wins[m.winner]||0)+1; });
+      Object.entries(wins).sort(function(a,b){return b[1]-a[1];}).forEach(function(e,i){
+        rows.push([i+1, e[0], e[1]]);
+      });
+    } else {
+      rows = [['Miejsce','Zawodnik','Punkty']];
+      entries.slice().sort(function(a,b){return b.score-a.score;}).forEach(function(e,i){
+        rows.push([i+1, e.name, e.score]);
+      });
+    }
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [{wch:10},{wch:28},{wch:14}];
+    // Bold header
+    XLSX.utils.book_append_sheet(wb, ws, gameNames[g].substring(0,31));
   });
-  var csv = lines.join('\n');
-  var blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = 'raport-zabbkowe-mistrzostwa-triki.csv';
-  a.click();
-  URL.revokeObjectURL(url);
+
+  var date = new Date().toLocaleDateString('pl-PL').replace(/\./g,'-');
+  XLSX.writeFile(wb, 'Zabbkowe-Mistrzostwa-Triki-'+date+'.xlsx');
 }
 </script>
 </body>
