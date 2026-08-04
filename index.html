@@ -25,10 +25,11 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .tab-btn.active-snake{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.6);color:#10b981;}
 .tab-btn.active-snake1v1{background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.6);color:#8b5cf6;}
 .tab-btn.active-pilka{background:rgba(249,115,22,0.15);border-color:rgba(249,115,22,0.6);color:#f97316;}
+.tab-btn.active-galaxy{background:rgba(168,85,247,0.15);border-color:rgba(168,85,247,0.6);color:#a855f7;}
 .header{text-align:center;margin-bottom:1.5rem;}
 .brand{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,7vw,3.5rem);font-weight:900;letter-spacing:0.04em;line-height:1;}
 .brand.instrukcja,.brand.wnioski{color:#f0eeff;}
-.brand.ninja{color:#22c55e;}.brand.boxer{color:#ef4444;}.brand.toss{color:#f59e0b;}.brand.snake{color:#10b981;}.brand.snake1v1{color:#8b5cf6;}.brand.pilka{color:#f97316;}
+.brand.ninja{color:#22c55e;}.brand.boxer{color:#ef4444;}.brand.toss{color:#f59e0b;}.brand.snake{color:#10b981;}.brand.snake1v1{color:#8b5cf6;}.brand.pilka{color:#f97316;}.brand.galaxy{color:#a855f7;}
 .form-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.25rem;margin-bottom:1.5rem;backdrop-filter:blur(10px);}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
 .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;}
@@ -39,7 +40,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .field input::placeholder{color:rgba(255,255,255,0.25);}
 .btn-add{width:100%;height:50px;border-radius:14px;border:none;color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:transform 0.15s;}
 .btn-add:active{transform:scale(0.97);}
-.btn-add.ninja{background:#22c55e;}.btn-add.boxer{background:#ef4444;}.btn-add.toss{background:#f59e0b;}.btn-add.snake{background:#10b981;}.btn-add.snake1v1{background:#8b5cf6;}.btn-add.pilka{background:#f97316;}.btn-add.fb{background:var(--zappka);}
+.btn-add.ninja{background:#22c55e;}.btn-add.boxer{background:#ef4444;}.btn-add.toss{background:#f59e0b;}.btn-add.snake{background:#10b981;}.btn-add.snake1v1{background:#8b5cf6;}.btn-add.pilka{background:#f97316;}.btn-add.galaxy{background:#a855f7;}.btn-add.fb{background:var(--zappka);}
 .err{font-size:0.75rem;color:#ef4444;margin-top:6px;display:none;font-weight:700;}
 .form-footer{display:flex;align-items:center;margin-top:0.9rem;gap:12px;}
 .sync-info{font-size:0.68rem;color:var(--muted);font-weight:700;flex:1;}
@@ -80,8 +81,8 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .panel-bokser .field label{color:#ef4444;}.panel-bokser .field label.jury-label{color:#fca5a5;}
 .panel-toss .field label{color:#f59e0b;}.panel-toss .field label.jury-label{color:#fcd34d;}
 .panel-snake .field label{color:#10b981;}.panel-snake .field label.jury-label{color:#6ee7b7;}
-.panel-snake1v1 .field label{color:#8b5cf6;}.panel-snake1v1 .field label.jury-label{color:#c4b5fd;}.panel-pilka .field label{color:#f97316;}.panel-pilka .field label.jury-label{color:#fed7aa;}
-.score-ninja{color:#22c55e}.score-bokser{color:#ef4444}.score-toss{color:#f59e0b}.score-snake{color:#10b981}.score-snake1v1{color:#8b5cf6}.score-pilka{color:#f97316}
+.panel-snake1v1 .field label{color:#8b5cf6;}.panel-snake1v1 .field label.jury-label{color:#c4b5fd;}.panel-pilka .field label{color:#f97316;}.panel-pilka .field label.jury-label{color:#fed7aa;}.panel-galaxy .field label{color:#a855f7;}.panel-galaxy .field label.jury-label{color:#d8b4fe;}
+.score-ninja{color:#22c55e}.score-bokser{color:#ef4444}.score-toss{color:#f59e0b}.score-snake{color:#10b981}.score-snake1v1{color:#8b5cf6}.score-pilka{color:#f97316}.score-galaxy{color:#a855f7}
 .instr-tip{background:rgba(255,255,255,0.04);border-radius:10px;padding:0.9rem 1rem;font-size:0.85rem;color:var(--muted);border:1px solid var(--border);margin-bottom:1rem;}
 .instr-tip strong{color:var(--text);}
 .instr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
@@ -119,6 +120,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
     <button class="tab-btn" id="tab-snake" onclick="switchTab('snake')">Snake</button>
     <button class="tab-btn" id="tab-snake1v1" onclick="switchTab('snake1v1')">Snake 1v1</button>
     <button class="tab-btn" id="tab-pilka" onclick="switchTab('pilka')">⚽ Piłka Nożna</button>
+    <button class="tab-btn" id="tab-galaxy" onclick="switchTab('galaxy')">🚀 Galaxy</button>
   </div>
   <div class="header"><div class="brand instrukcja" id="brandLabel">Instrukcja</div></div>
 
@@ -285,15 +287,30 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
     <div class="list" id="pilka-list"><div class="empty"><span>⚽</span>Brak wynikow!</div></div>
   </div>
 
+  <div class="panel panel-galaxy" id="panel-galaxy">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="galaxy-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="galaxy-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="galaxy-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="galaxy-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+      </div>
+      <button class="btn-add galaxy" onclick="addEntry('galaxy')">+ Dodaj</button>
+      <div class="err" id="galaxy-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="galaxy-jury-toggle" onchange="toggleJury('galaxy',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Galaxy</div><div class="ranking-count" id="galaxy-count">0 zawodnikow</div></div>
+    <div class="list" id="galaxy-list"><div class="empty"><span>🚀</span>Brak wynikow!</div></div>
+  </div>
+
 </div>
 <script>
-var ALL_TABS=['instrukcja','wnioski','ninja','bokser','toss','snake','snake1v1','pilka'];
-var RANKING_SPORTS=['ninja','bokser','toss','snake','snake1v1','pilka'];
-var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1',pilka:'Piłka Nożna'};
-var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍',pilka:'⚽'};
+var ALL_TABS=['instrukcja','wnioski','ninja','bokser','toss','snake','snake1v1','pilka','galaxy'];
+var RANKING_SPORTS=['ninja','bokser','toss','snake','snake1v1','pilka','galaxy'];
+var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1',pilka:'Piłka Nożna',galaxy:'Galaxy'};
+var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍',pilka:'⚽',galaxy:'🚀'};
 var MEDALS=['🥇','🥈','🥉'];
 var currentTab='instrukcja';
-var data={ninja:[],bokser:[],toss:[],snake:[],snake1v1:[],pilka:[]};
+var data={ninja:[],bokser:[],toss:[],snake:[],snake1v1:[],pilka:[],galaxy:[]};
 
 var DB_URL='https://ninja-frog-ranking-default-rtdb.europe-west1.firebasedatabase.app';
 function putDB(key,val){fetch(DB_URL+'/'+key+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(val)}).catch(function(){});}
@@ -447,7 +464,7 @@ function exportRaport() {
 function doExport() {
   var XLSX = window.XLSX;
   var wb = XLSX.utils.book_new();
-  var gameNames = {ninja:'Ninja Frog', bokser:'Bokser', toss:'Toss', snake:'Snake', snake1v1:'Snake 1v1', pilka:'Piłka Nożna'};
+  var gameNames = {ninja:'Ninja Frog', bokser:'Bokser', toss:'Toss', snake:'Snake', snake1v1:'Snake 1v1', pilka:'Piłka Nożna',galaxy:'Galaxy'};
   var games = ['ninja','bokser','toss','snake','snake1v1','pilka'];
 
   // ── ARKUSZ PODSUMOWANIE ──
