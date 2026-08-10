@@ -67,6 +67,7 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
 .entry.rank-3 .rank-badge{background:rgba(205,127,50,0.12);color:var(--bronze);border-color:rgba(205,127,50,0.35);font-size:1.3rem;}
 .entry-info{flex:1;min-width:0;}
 .entry-name{font-size:1rem;font-weight:800;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.round-header{font-family:'Orbitron',sans-serif;font-size:0.75rem;font-weight:900;color:var(--muted);letter-spacing:0.12em;padding:12px 4px 4px;border-top:1px solid var(--border);margin-top:8px;text-transform:uppercase;}
 .entry-breakdown{font-size:0.85rem;color:var(--muted);margin-top:3px;}
 .jury-pts{font-weight:800;font-size:1.2rem;color:var(--zappka);}.zappka-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:20px;padding:2px 8px;font-size:0.75rem;font-weight:800;color:#22c55e;margin-left:6px;}
 .entry-score{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;flex-shrink:0;}
@@ -245,6 +246,12 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
         <div class="field"><label>Imię</label><input id="snake-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
         <div class="field"><label>Wynik</label><input id="snake-score" type="number" placeholder="0" inputmode="decimal"/></div>
         <div class="field jury-field hidden" id="snake-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="snake-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+        <div class="field"><label>Runda</label><select id="snake-round">
+<option value="16:30">16:30</option>
+<option value="19:30">19:30</option>
+<option value="22:30">22:30</option>
+<option value="01:30">01:30</option>
+</select></div>
       </div>
       <button class="btn-add snake" onclick="addEntry('snake')">+ Dodaj</button>
       <div class="err" id="snake-err"></div>
@@ -278,6 +285,14 @@ body{background:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUD
         <div class="field"><label>Imię</label><input id="pilka-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
         <div class="field"><label>Wynik</label><input id="pilka-score" type="number" placeholder="0" inputmode="decimal"/></div>
         <div class="field jury-field hidden" id="pilka-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="pilka-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+        <div class="field"><label>Runda</label><select id="pilka-round">
+<option value="17:30">17:30</option>
+<option value="18:30">18:30</option>
+<option value="20:30">20:30</option>
+<option value="21:30">21:30</option>
+<option value="23:30">23:30</option>
+<option value="00:30">00:30</option>
+</select></div>
       </div>
       <button class="btn-add pilka" onclick="addEntry('pilka')">+ Dodaj</button>
       <div class="err" id="pilka-err"></div>
@@ -369,7 +384,9 @@ function addEntry(sport){
   var err=document.getElementById(sport+'-err');
   if(!name||isNaN(score)){err.textContent='Wypelnij imie i wynik!';err.style.display='block';return;}
   err.style.display='none';
-  var entry={id:'e'+Date.now(),name:name,score:score,jury:jury};
+  var roundEl=document.getElementById(sport+'-round');
+  var round=roundEl?roundEl.value:'';
+  var entry={id:'e'+Date.now(),name:name,score:score,jury:jury,round:round};
   data[sport].push(entry);
   data[sport].sort(function(a,b){return b.score-a.score;});
   document.getElementById(sport+'-name').value='';document.getElementById(sport+'-score').value='';
@@ -415,6 +432,24 @@ function render(sport){
   var list=document.getElementById(sport+'-list');
   if(!n){list.innerHTML='<div class="empty"><span>'+EMOJI[sport]+'</span>Brak wyników!</div>';return;}
   list.innerHTML='';
+  // Group by round for snake and pilka
+  if((sport==='snake'||sport==='pilka')&&entries[0]&&entries[0].round){
+    var rounds={};
+    entries.forEach(function(e){var r=e.round||'Bez rundy';if(!rounds[r])rounds[r]=[];rounds[r].push(e);});
+    Object.keys(rounds).sort().forEach(function(r){
+      var rDiv=document.createElement('div');rDiv.className='round-header';rDiv.textContent='Runda '+r;list.appendChild(rDiv);
+      rounds[r].sort(function(a,b){return b.score-a.score;}).forEach(function(e,i){
+        var rank=i+1;var zappka=e.jury||0;var total=e.score;
+        var div=document.createElement('div');div.className='entry'+(rank<=3?' rank-'+rank:'');
+        var badge=rank<=3?MEDALS[i]:rank;
+        var breakdown=zappka?'<div class="entry-breakdown"><span class="zappka-badge">🐸 #'+zappka+' w Żappce</span></div>':'';
+        var sc=rank===1?'':' score-'+sport;
+        div.innerHTML='<div class="rank-badge">'+badge+'</div><div class="entry-info"><div class="entry-name">'+esc(e.name)+'</div>'+breakdown+'</div><div class="entry-score'+sc+'">'+fmt(total)+' <span class="pts-label">PKT</span></div>';
+        list.appendChild(div);
+      });
+    });
+    return;
+  }
   entries.forEach(function(e,i){
     var rank=i+1;var zappka=e.jury||0;var total=e.score;
     var div=document.createElement('div');div.className='entry'+(rank<=3?' rank-'+rank:'');
