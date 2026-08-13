@@ -415,9 +415,10 @@ function addFeedback(){
   document.getElementById('fb-name').value='';document.getElementById('fb-text').value='';
 }
 function deleteEntry(sport,id){
-  data[sport]=data[sport].filter(function(e){return e.id!==id;});
+  data[sport]=data[sport].filter(function(e){return String(e.id)!==String(id);});
   if(sport==='snake1v1')renderMatches();else render(sport);
-  var obj={};data[sport].forEach(function(e){obj[e.id]=e;});putDB(sport,Object.keys(obj).length?obj:null);
+  var obj={};data[sport].forEach(function(e){if(e.id)obj[e.id]=e;});
+  putDB(sport,Object.keys(obj).length?obj:null);
 }
 function clearAll(){
   if(currentTab==='instrukcja'||currentTab==='wnioski')return;
