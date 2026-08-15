@@ -325,9 +325,6 @@ var ROUND_SPORTS={
   snake:['16:30','19:30','22:30','01:30'],
   pilka:['17:30','18:30','20:30','21:30','23:30','00:30']
 };
-// All DB keys including round-based ones
-var ALL_DB_KEYS=RANKING_SPORTS.slice();
-Object.keys(ROUND_SPORTS).forEach(function(s){ROUND_SPORTS[s].forEach(function(r){ALL_DB_KEYS.push(s+'_'+r.replace(':',''));});});
 var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1',pilka:'Piłka Nożna',galaxy:'Galaxy'};
 var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍',pilka:'⚽',galaxy:'🚀'};
 var MEDALS=['🥇','🥈','🥉'];
