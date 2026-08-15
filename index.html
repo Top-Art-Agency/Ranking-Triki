@@ -599,4 +599,569 @@ function doExport() {
 }
 </script>
 </body>
+</html>.field label{font-size:0.65rem;font-weight:800;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);}
+.field input,.field select{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:12px;padding:0 12px;height:48px;font-size:1rem;font-family:'Nunito',sans-serif;color:var(--text);outline:none;width:100%;}
+.field select option{background:#1a1a6e;}
+.field input::placeholder{color:rgba(255,255,255,0.25);}
+.btn-add{width:100%;height:50px;border-radius:14px;border:none;color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:transform 0.15s;}
+.btn-add:active{transform:scale(0.97);}
+.btn-add.ninja{background:#22c55e;}.btn-add.boxer{background:#ef4444;}.btn-add.toss{background:#f59e0b;}.btn-add.snake{background:#10b981;}.btn-add.snake1v1{background:#8b5cf6;}.btn-add.pilka{background:#f97316;}.btn-add.galaxy{background:#a855f7;}.btn-add.fb{background:var(--zappka);}
+.err{font-size:0.75rem;color:#ef4444;margin-top:6px;display:none;font-weight:700;}
+.form-footer{display:flex;align-items:center;margin-top:0.9rem;gap:12px;}
+.sync-info{font-size:0.68rem;color:var(--muted);font-weight:700;flex:1;}
+.toggle-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
+.toggle-wrap input{display:none;}
+.toggle-track{width:36px;height:20px;border-radius:999px;background:rgba(255,255,255,0.15);border:1px solid var(--border);position:relative;transition:background 0.2s;}
+.toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:white;transition:transform 0.2s;}
+.toggle-wrap input:checked + .toggle-track{background:var(--zappka);border-color:var(--zappka);}
+.toggle-wrap input:checked + .toggle-track::after{transform:translateX(16px);}
+.toggle-label{font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);}
+.jury-field{transition:opacity 0.2s;}.jury-field.hidden{opacity:0;pointer-events:none;}
+.ranking-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;}
+.ranking-title{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:var(--muted);}
+.ranking-count{font-size:0.72rem;font-weight:800;color:var(--muted);}
+.list{display:flex;flex-direction:column;gap:8px;}
+.entry{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px 14px;backdrop-filter:blur(8px);animation:fadeSlide 0.3s ease both;}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.entry.rank-1{border-color:rgba(255,209,102,0.5);background:rgba(255,209,102,0.06);}
+.entry.rank-2{border-color:rgba(192,192,192,0.4);background:rgba(192,192,192,0.05);}
+.entry.rank-3{border-color:rgba(205,127,50,0.4);background:rgba(205,127,50,0.05);}
+.rank-badge{width:38px;height:38px;min-width:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:0.9rem;font-weight:700;background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border);flex-shrink:0;}
+.entry.rank-1 .rank-badge{background:rgba(255,209,102,0.15);color:var(--gold);border-color:rgba(255,209,102,0.4);font-size:1.3rem;}
+.entry.rank-2 .rank-badge{background:rgba(192,192,192,0.12);color:var(--silver);border-color:rgba(192,192,192,0.35);font-size:1.3rem;}
+.entry.rank-3 .rank-badge{background:rgba(205,127,50,0.12);color:var(--bronze);border-color:rgba(205,127,50,0.35);font-size:1.3rem;}
+.entry-info{flex:1;min-width:0;}
+.entry-name{font-size:1rem;font-weight:800;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.round-header{font-family:'Orbitron',sans-serif;font-size:0.75rem;font-weight:900;color:var(--muted);letter-spacing:0.12em;padding:12px 4px 4px;border-top:1px solid var(--border);margin-top:8px;text-transform:uppercase;}
+.entry-breakdown{font-size:0.85rem;color:var(--muted);margin-top:3px;}
+.jury-pts{font-weight:800;font-size:1.2rem;color:var(--zappka);}.zappka-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:20px;padding:2px 8px;font-size:0.75rem;font-weight:800;color:#22c55e;margin-left:6px;}
+.entry-score{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;flex-shrink:0;}
+.entry.rank-1 .entry-score{color:var(--gold)!important;}
+.score-unit{font-size:0.6rem;color:var(--muted);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;align-self:flex-end;margin-bottom:5px;flex-shrink:0;}
+.del-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.2);font-size:0.85rem;padding:6px 8px;border-radius:6px;flex-shrink:0;}
+.del-btn:hover{color:#ef4444;background:rgba(239,68,68,0.12);}
+.empty{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:0.9rem;border:1px dashed var(--border);border-radius:16px;}
+.empty span{font-size:2rem;display:block;margin-bottom:0.5rem;opacity:0.4;}
+.panel{display:none;}.panel.active{display:block;}
+.panel-ninja .field label{color:#22c55e;}.panel-ninja .field label.jury-label{color:#86efac;}
+.panel-bokser .field label{color:#ef4444;}.panel-bokser .field label.jury-label{color:#fca5a5;}
+.panel-toss .field label{color:#f59e0b;}.panel-toss .field label.jury-label{color:#fcd34d;}
+.panel-snake .field label{color:#10b981;}.panel-snake .field label.jury-label{color:#6ee7b7;}
+.panel-snake1v1 .field label{color:#8b5cf6;}.panel-snake1v1 .field label.jury-label{color:#c4b5fd;}.panel-pilka .field label{color:#f97316;}.panel-pilka .field label.jury-label{color:#fed7aa;}.panel-galaxy .field label{color:#a855f7;}.panel-galaxy .field label.jury-label{color:#d8b4fe;}
+.score-ninja{color:#22c55e}.score-bokser{color:#ef4444}.score-toss{color:#f59e0b}.score-snake{color:#10b981}.score-snake1v1{color:#8b5cf6}.score-pilka{color:#f97316}.score-galaxy{color:#a855f7}
+.instr-tip{background:rgba(255,255,255,0.04);border-radius:10px;padding:0.9rem 1rem;font-size:0.85rem;color:var(--muted);border:1px solid var(--border);margin-bottom:1rem;}
+.instr-tip strong{color:var(--text);}
+.instr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
+.instr-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.25rem;backdrop-filter:blur(10px);}
+.instr-card h3{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;}
+.instr-card ol{padding-left:1.2rem;}
+.instr-card ol li{font-size:0.9rem;color:var(--text);margin-bottom:0.5rem;line-height:1.4;}
+.instr-card ol li strong{color:white;}
+.instr-ninja{border-color:rgba(34,197,94,0.4);}.instr-ninja h3{color:#22c55e;}
+.instr-bokser{border-color:rgba(239,68,68,0.4);}.instr-bokser h3{color:#ef4444;}
+.instr-toss{border-color:rgba(245,158,11,0.4);}.instr-toss h3{color:#f59e0b;}
+.instr-snake{border-color:rgba(16,185,129,0.4);}.instr-snake h3{color:#10b981;}
+.instr-snake1v1{border-color:rgba(139,92,246,0.4);grid-column:span 2;}.instr-snake1v1 h3{color:#8b5cf6;}
+.wnioski-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.25rem;margin-bottom:1.25rem;backdrop-filter:blur(10px);}
+.wnioski-section h3{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:var(--muted);margin-bottom:1rem;letter-spacing:0.08em;text-transform:uppercase;}
+.wnioski-section textarea{width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:12px;padding:12px;font-size:0.95rem;font-family:'Nunito',sans-serif;color:var(--text);outline:none;resize:vertical;min-height:90px;}
+.wnioski-section textarea::placeholder{color:rgba(255,255,255,0.25);}
+.feedback-list{display:flex;flex-direction:column;gap:8px;margin-top:0.75rem;}
+.feedback-item{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:10px 14px;}
+.feedback-item .fb-name{font-size:0.75rem;font-weight:800;color:var(--zappka);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;}
+.feedback-item .fb-text{font-size:0.9rem;color:var(--text);line-height:1.4;}
+@media(max-width:480px){.instr-grid{grid-template-columns:1fr}.instr-snake1v1{grid-column:span 1}}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <button class="btn-clear" onclick="clearAll()">Wyczyść</button>
+  <button class="btn-export" onclick="exportRaport()">📊 Eksportuj</button>
+  <div class="tabs">
+    <button class="tab-btn active-instrukcja" id="tab-instrukcja" onclick="switchTab('instrukcja')">📋 Instrukcja</button>
+    <button class="tab-btn" id="tab-wnioski" onclick="switchTab('wnioski')">💬 Wnioski</button>
+    <button class="tab-btn" id="tab-ninja" onclick="switchTab('ninja')">Ninja Frog</button>
+    <button class="tab-btn" id="tab-bokser" onclick="switchTab('bokser')">Bokser</button>
+    <button class="tab-btn" id="tab-toss" onclick="switchTab('toss')">Toss</button>
+    <button class="tab-btn" id="tab-snake" onclick="switchTab('snake')">Snake</button>
+    <button class="tab-btn" id="tab-snake1v1" onclick="switchTab('snake1v1')">Snake 1v1</button>
+    <button class="tab-btn" id="tab-pilka" onclick="switchTab('pilka')">⚽ Piłka Nożna</button>
+    <button class="tab-btn" id="tab-galaxy" onclick="switchTab('galaxy')">🚀 Galaxy</button>
+  </div>
+  <div class="header"><div class="brand instrukcja" id="brandLabel">Instrukcja</div></div>
+
+  <div class="panel panel-instrukcja active" id="panel-instrukcja">
+    <div class="instr-tip">💡 <strong>Jak to działa?</strong> Zagraj w grę, zeskanuj kod QR i wpisz swój wynik w odpowiedniej zakładce. Wygrywa osoba z najwyższym wynikiem!</div>
+    <div class="instr-grid">
+      <div class="instr-card instr-bokser">
+        
+        <h3>🥊 Bokser</h3>
+        <ol>
+          <li>Wciśnij Triki głęboko w pięść</li>
+          <li>Stań w rozkroku, przyjmij pozycję</li>
+          <li>Walnij lewym lub prawym prostym!</li>
+          <li>Wpisz wynik do rankingu</li>
+        </ol>
+      </div>
+      <div class="instr-card instr-ninja">
+        
+        <h3>🥷 Ninja Frog</h3>
+        <ol>
+          <li>Potrząśnij Triki — gra startuje!</li>
+          <li>Potrząsaj, żeby lecieć wyżej</li>
+          <li>Omijaj przeszkody, zbieraj monety</li>
+          <li>Wpisz wynik do rankingu</li>
+        </ol>
+      </div>
+      <div class="instr-card instr-toss">
+        
+        <h3>🎯 Toss</h3>
+        <ol>
+          <li>Ekran pokazuje liczbę — tyle obrotów masz trafić</li>
+          <li>Podrzuć Triki jak monetę i traf w wynik!</li>
+          <li>Seria trafień z rzędu = mnożnik punktów</li>
+          <li>Wpisz wynik do rankingu</li>
+        </ol>
+      </div>
+      <div class="instr-card instr-snake">
+        
+        <h3>🐍 Snake</h3>
+        <ol>
+          <li>Połóż Triki na stole</li>
+          <li>Obracaj Triki — kręcisz wężem</li>
+          <li>Zbieraj monety, rozbijaj bloki</li>
+          <li>Wpisz wynik do rankingu</li>
+        </ol>
+      </div>
+      <div class="instr-card instr-snake1v1">
+        
+        <h3>🐍 Snake 1v1</h3>
+        <ol>
+          <li>Podłączcie dwa Triki przez Bluetooth</li>
+          <li>Każdy kręci swoim wężem na jednym telefonie</li>
+          <li>Wyeliminuj przeciwnika!</li>
+          <li>Wpisz wynik meczu do rankingu</li>
+        </ol>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="panel panel-wnioski" id="panel-wnioski">
+    <div class="wnioski-section">
+      <h3>💬 Twoja opinia o grach</h3>
+      <div class="field" style="margin-bottom:10px"><label>Imię / ksywa</label><input id="fb-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+      <textarea id="fb-text" placeholder="Co myślisz o grach? Która się najbardziej podobała?"></textarea>
+      <button class="btn-add fb" style="margin-top:10px" onclick="addFeedback()">Wyślij opinię</button>
+      <div class="err" id="fb-err"></div>
+    </div>
+    <div class="wnioski-section">
+      <h3>📋 Opinie uczestników</h3>
+      <div class="feedback-list" id="feedback-list"><div style="color:var(--muted);font-size:0.85rem">Brak opinii — bądź pierwszy!</div></div>
+    </div>
+  </div>
+
+  <div class="panel panel-ninja" id="panel-ninja">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="ninja-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="ninja-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="ninja-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="ninja-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+      </div>
+      <button class="btn-add ninja" onclick="addEntry('ninja')">+ Dodaj</button>
+      <div class="err" id="ninja-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="ninja-jury-toggle" onchange="toggleJury('ninja',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Ninja Frog</div><div class="ranking-count" id="ninja-count">0 zawodników</div></div>
+    <div class="list" id="ninja-list"><div class="empty"><span>🥷</span>Brak wyników!</div></div>
+  </div>
+
+  <div class="panel panel-bokser" id="panel-bokser">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="bokser-name" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="bokser-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="bokser-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="bokser-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+      </div>
+      <button class="btn-add boxer" onclick="addEntry('bokser')">+ Dodaj</button>
+      <div class="err" id="bokser-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="bokser-jury-toggle" onchange="toggleJury('bokser',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Bokser</div><div class="ranking-count" id="bokser-count">0 zawodników</div></div>
+    <div class="list" id="bokser-list"><div class="empty"><span>🥊</span>Brak wyników!</div></div>
+  </div>
+
+  <div class="panel panel-toss" id="panel-toss">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="toss-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="toss-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="toss-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="toss-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+      </div>
+      <button class="btn-add toss" onclick="addEntry('toss')">+ Dodaj</button>
+      <div class="err" id="toss-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="toss-jury-toggle" onchange="toggleJury('toss',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Toss</div><div class="ranking-count" id="toss-count">0 zawodników</div></div>
+    <div class="list" id="toss-list"><div class="empty"><span>🎯</span>Brak wyników!</div></div>
+  </div>
+
+  <div class="panel panel-snake" id="panel-snake">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="snake-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="snake-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="snake-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="snake-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+        <div class="field"><label>Runda</label><select id="snake-round">
+<option value="16:30">16:30</option>
+<option value="19:30">19:30</option>
+<option value="22:30">22:30</option>
+<option value="01:30">01:30</option>
+</select></div>
+      </div>
+      <button class="btn-add snake" onclick="addEntry('snake')">+ Dodaj</button>
+      <div class="err" id="snake-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="snake-jury-toggle" onchange="toggleJury('snake',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Snake</div><div class="ranking-count" id="snake-count">0 zawodników</div></div>
+    <div class="list" id="snake-list"><div class="empty"><span>🐍</span>Brak wyników!</div></div>
+  </div>
+
+  <div class="panel panel-snake1v1" id="panel-snake1v1">
+    <div class="form-wrap">
+      <div class="form-row">
+        <div class="field"><label>Gracz 1</label><input id="s1v1-p1" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Gracz 2</label><input id="s1v1-p2" type="text" placeholder="np. Marek" maxlength="30" autocomplete="off"/></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Zwyciezca</label><select id="s1v1-winner"><option value="1">Gracz 1</option><option value="2">Gracz 2</option></select></div>
+        <div class="field jury-field hidden" id="snake1v1-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="s1v1-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+      </div>
+      <button class="btn-add snake1v1" onclick="addMatch()">+ Dodaj mecz</button>
+      <div class="err" id="snake1v1-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na zywo</span><label class="toggle-wrap"><input type="checkbox" id="snake1v1-jury-toggle" onchange="toggleJury('snake1v1',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Snake 1v1</div><div class="ranking-count" id="snake1v1-count">0 meczow</div></div>
+    <div class="list" id="snake1v1-list"><div class="empty"><span>🐍</span>Brak meczow!</div></div>
+  </div>
+
+  <div class="panel panel-pilka" id="panel-pilka">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="pilka-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="pilka-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="pilka-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="pilka-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+        <div class="field"><label>Runda</label><select id="pilka-round">
+<option value="17:30">17:30</option>
+<option value="18:30">18:30</option>
+<option value="20:30">20:30</option>
+<option value="21:30">21:30</option>
+<option value="23:30">23:30</option>
+<option value="00:30">00:30</option>
+</select></div>
+      </div>
+      <button class="btn-add pilka" onclick="addEntry('pilka')">+ Dodaj</button>
+      <div class="err" id="pilka-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="pilka-jury-toggle" onchange="toggleJury('pilka',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Piłka Nożna</div><div class="ranking-count" id="pilka-count">0 zawodnikow</div></div>
+    <div class="list" id="pilka-list"><div class="empty"><span>⚽</span>Brak wynikow!</div></div>
+  </div>
+
+  <div class="panel panel-galaxy" id="panel-galaxy">
+    <div class="form-wrap">
+      <div class="form-row-3">
+        <div class="field"><label>Imię</label><input id="galaxy-name" type="text" placeholder="np. Kasia" maxlength="30" autocomplete="off"/></div>
+        <div class="field"><label>Wynik</label><input id="galaxy-score" type="number" placeholder="0" inputmode="decimal"/></div>
+        <div class="field jury-field hidden" id="galaxy-jury-field"><label class="jury-label">Miejsce w rankingu Żappki</label><input id="galaxy-jury" type="number" placeholder="#miejsce" inputmode="decimal"/></div>
+      </div>
+      <button class="btn-add galaxy" onclick="addEntry('galaxy')">+ Dodaj</button>
+      <div class="err" id="galaxy-err"></div>
+      <div class="form-footer"><span class="sync-info">Synchronizacja na żywo</span><label class="toggle-wrap"><input type="checkbox" id="galaxy-jury-toggle" onchange="toggleJury('galaxy',this.checked)"/><span class="toggle-track"></span><span class="toggle-label">Żappka</span></label></div>
+    </div>
+    <div class="ranking-header"><div class="ranking-title">Wyniki Galaxy</div><div class="ranking-count" id="galaxy-count">0 zawodnikow</div></div>
+    <div class="list" id="galaxy-list"><div class="empty"><span>🚀</span>Brak wynikow!</div></div>
+  </div>
+
+</div>
+<script>
+var ALL_TABS=['instrukcja','wnioski','ninja','bokser','toss','snake','snake1v1','pilka','galaxy'];
+var RANKING_SPORTS=['ninja','bokser','toss','snake','snake1v1','pilka','galaxy'];
+var ROUND_SPORTS={
+  snake:['16:30','19:30','22:30','01:30'],
+  pilka:['17:30','18:30','20:30','21:30','23:30','00:30']
+};
+var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1',pilka:'Piłka Nożna',galaxy:'Galaxy'};
+var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍',pilka:'⚽',galaxy:'🚀'};
+var MEDALS=['🥇','🥈','🥉'];
+var currentTab='instrukcja';
+var data={ninja:[],bokser:[],toss:[],snake:[],snake1v1:[],pilka:[],galaxy:[]};
+
+var DB_URL='https://ninja-frog-ranking-default-rtdb.europe-west1.firebasedatabase.app';
+function putDB(key,val){fetch(DB_URL+'/'+key+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(val)}).catch(function(){});}
+var POLL_MS=4000;
+
+function fetchDB(key,cb){
+  fetch(DB_URL+'/'+key+'.json')
+    .then(function(r){return r.json();})
+    .then(function(val){cb(val);})
+    .catch(function(){cb(null);});
+}
+
+var lastHash={};
+function hashVal(val){return JSON.stringify(val);}
+
+
+function renderRound(sport){
+  var rounds=ROUND_SPORTS[sport];
+  var list=document.getElementById(sport+'-list');
+  var totalCount=0;
+  var html='';
+  rounds.forEach(function(r){
+    var dbKey=sport+'_'+r.replace(':','');
+    var entries=data[dbKey]||[];
+    totalCount+=entries.length;
+    html+='<div class="round-header">Runda '+r+' — '+entries.length+' zawodników</div>';
+    if(!entries.length){
+      html+='<div class="empty"><span>'+EMOJI[sport]+'</span>Brak wyników</div>';
+    } else {
+      entries.forEach(function(e,i){
+        var rank=i+1;
+        var badge=rank<=3?MEDALS[i]:rank;
+        var cls=rank<=3?' rank-'+rank:'';
+        var sc=rank===1?'':' score-'+sport;
+        var zappka=e.jury?'<div class="entry-breakdown"><span class="zappka-badge">🐸 #'+e.jury+' w Żappce</span></div>':'';
+        html+='<div class="entry'+cls+'" data-id="'+e.id+'" data-key="'+dbKey+'">'
+          +'<div class="rank-badge">'+badge+'</div>'
+          +'<div class="entry-info"><div class="entry-name">'+esc(e.name)+'</div>'+zappka+'</div>'
+          +'<div class="entry-score'+sc+'">'+fmt(e.score)+'</div>'
+          +'<div class="score-unit">pkt</div>'
+          +'<button class="del-btn" onclick="deleteRoundEntry(''+dbKey+'',''+e.id+'')">✕</button>'
+          +'</div>';
+      });
+    }
+  });
+  list.innerHTML=html;
+  document.getElementById(sport+'-count').textContent=totalCount+' zawodników';
+}
+
+function deleteRoundEntry(dbKey,id){
+  if(!data[dbKey])return;
+  data[dbKey]=data[dbKey].filter(function(e){return String(e.id)!==String(id);});
+  var sport=dbKey.split('_')[0];
+  renderRound(sport);
+  var obj={};data[dbKey].forEach(function(e){obj[e.id]=e;});
+  putDB(dbKey,Object.keys(obj).length?obj:null);
+}
+function pollAll(){
+  RANKING_SPORTS.forEach(function(sport){
+    fetchDB(sport,function(val){
+      var h=hashVal(val);
+      if(h===lastHash[sport])return;
+      lastHash[sport]=h;
+      data[sport]=val?Object.values(val):[];
+      if(sport!=='snake1v1'){data[sport].sort(function(a,b){return b.score-a.score;});if(ROUND_SPORTS[sport])renderRound(sport);else render(sport);}
+      else{renderMatches();}
+    });
+  });
+
+  fetchDB('feedback',function(val){
+    var h=hashVal(val);
+    if(h===lastHash['feedback'])return;
+    lastHash['feedback']=h;
+    renderFeedback(val?Object.values(val):[]);
+  });
+}
+
+pollAll();
+setInterval(pollAll,POLL_MS);
+
+function switchTab(tab){
+  currentTab=tab;
+  ALL_TABS.forEach(function(s){
+    document.getElementById('panel-'+s).className='panel panel-'+s+(s===tab?' active':'');
+    document.getElementById('tab-'+s).className='tab-btn'+(s===tab?' active-'+s:'');
+  });
+  var b=document.getElementById('brandLabel');b.className='brand '+tab;b.textContent=NAMES[tab];
+}
+function toggleJury(sport,on){
+  var f=document.getElementById(sport+'-jury-field');if(!f)return;
+  f.className='field jury-field'+(on?'':' hidden');
+  if(!on){var i=sport==='snake1v1'?document.getElementById('s1v1-jury'):document.getElementById(sport+'-jury');if(i)i.value='';}
+}
+function addEntry(sport){
+  var name=document.getElementById(sport+'-name').value.trim();
+  var score=parseFloat(document.getElementById(sport+'-score').value);
+  var juryEl=document.getElementById(sport+'-jury');
+  var jury=juryEl?(parseFloat(juryEl.value)||0):0;
+  var err=document.getElementById(sport+'-err');
+  if(!name||isNaN(score)){err.textContent='Wypelnij imie i wynik!';err.style.display='block';return;}
+  err.style.display='none';
+  var roundEl=document.getElementById(sport+'-round');
+  var round=roundEl?roundEl.value:'';
+  var entry={id:'e'+Date.now(),name:name,score:score,jury:jury,round:round};
+  data[sport].push(entry);
+  data[sport].sort(function(a,b){return b.score-a.score;});
+  document.getElementById(sport+'-name').value='';document.getElementById(sport+'-score').value='';
+  if(juryEl)juryEl.value='';document.getElementById(sport+'-name').focus();
+  if(ROUND_SPORTS[sport])renderRound(sport);else render(sport);
+  var obj={};data[sport].forEach(function(e){obj[e.id]=e;});putDB(sport,obj);
+}
+function addMatch(){
+  var p1=document.getElementById('s1v1-p1').value.trim();var p2=document.getElementById('s1v1-p2').value.trim();
+  var winner=document.getElementById('s1v1-winner').value;var jury=parseFloat(document.getElementById('s1v1-jury').value)||0;
+  var err=document.getElementById('snake1v1-err');
+  if(!p1||!p2){err.textContent='Wypelnij obu graczy!';err.style.display='block';return;}
+  err.style.display='none';
+  var wn=winner==='1'?p1:p2;var ln=winner==='1'?p2:p1;
+  var entry={id:'e'+Date.now(),p1:p1,p2:p2,winner:wn,loser:ln,jury:jury};
+  data['snake1v1'].push(entry);
+  document.getElementById('s1v1-p1').value='';document.getElementById('s1v1-p2').value='';document.getElementById('s1v1-jury').value='';
+  document.getElementById('s1v1-p1').focus();renderMatches();
+  var obj={};data['snake1v1'].forEach(function(e){obj[e.id]=e;});putDB('snake1v1',obj);
+}
+function addFeedback(){
+  var name=document.getElementById('fb-name').value.trim();var text=document.getElementById('fb-text').value.trim();
+  var err=document.getElementById('fb-err');
+  if(!name||!text){err.textContent='Wpisz imie i opinie!';err.style.display='block';return;}
+  err.style.display='none';var id='f'+Date.now();
+  putDB('feedback/'+id,{id:id,name:name,text:text,ts:Date.now()});
+  document.getElementById('fb-name').value='';document.getElementById('fb-text').value='';
+}
+function deleteEntry(sport,id){
+  data[sport]=data[sport].filter(function(e){return String(e.id)!==String(id);});
+  if(sport==='snake1v1')renderMatches();else if(ROUND_SPORTS[sport])renderRound(sport);else render(sport);
+  var obj={};data[sport].forEach(function(e){if(e.id)obj[e.id]=e;});
+  putDB(sport,Object.keys(obj).length?obj:null);
+}
+function clearAll(){
+  if(currentTab==='instrukcja'||currentTab==='wnioski')return;
+  if(!confirm('Wyczyscic ranking '+NAMES[currentTab]+'?'))return;
+  data[currentTab]=[];if(currentTab==='snake1v1')renderMatches();else render(currentTab);putDB(currentTab,null);
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function fmt(s){return Number.isInteger(s)?s:parseFloat(s.toFixed(2));}
+function render(sport){
+  var entries=data[sport];var n=entries.length;
+  document.getElementById(sport+'-count').textContent=n+' zawodnik'+(n===1?'':'ów');
+  var list=document.getElementById(sport+'-list');
+  if(!n){list.innerHTML='<div class="empty"><span>'+EMOJI[sport]+'</span>Brak wyników!</div>';return;}
+  list.innerHTML='';
+  // Group by round for snake and pilka
+  if((sport==='snake'||sport==='pilka')&&entries[0]&&entries[0].round){
+    var rounds={};
+    entries.forEach(function(e){var r=e.round||'Bez rundy';if(!rounds[r])rounds[r]=[];rounds[r].push(e);});
+    Object.keys(rounds).sort().forEach(function(r){
+      var rDiv=document.createElement('div');rDiv.className='round-header';rDiv.textContent='Runda '+r;list.appendChild(rDiv);
+      rounds[r].sort(function(a,b){return b.score-a.score;}).forEach(function(e,i){
+        var rank=i+1;var zappka=e.jury||0;var total=e.score;
+        var div=document.createElement('div');div.className='entry'+(rank<=3?' rank-'+rank:'');
+        var badge=rank<=3?MEDALS[i]:rank;
+        var breakdown=zappka?'<div class="entry-breakdown"><span class="zappka-badge">🐸 #'+zappka+' w Żappce</span></div>':'';
+        var sc=rank===1?'':' score-'+sport;
+        div.innerHTML='<div class="rank-badge">'+badge+'</div><div class="entry-info"><div class="entry-name">'+esc(e.name)+'</div>'+breakdown+'</div><div class="entry-score'+sc+'">'+fmt(total)+' <span class="pts-label">PKT</span></div>';
+        var btn=document.createElement('button');btn.className='del-btn';btn.textContent='✕';
+        (function(s,id){btn.onclick=function(){deleteEntry(s,id);};})(sport,e.id);
+        div.appendChild(btn);list.appendChild(div);
+      });
+    });
+    return;
+  }
+  entries.forEach(function(e,i){
+    var rank=i+1;var zappka=e.jury||0;var total=e.score;
+    var div=document.createElement('div');div.className='entry'+(rank<=3?' rank-'+rank:'');
+    var badge=rank<=3?MEDALS[i]:rank;
+    var breakdown=zappka?'<div class="entry-breakdown"><span class="zappka-badge">🐸 #'+zappka+' w Żappce</span></div>':'';
+    var sc=rank===1?'':' score-'+sport;
+    div.innerHTML='<div class="rank-badge">'+badge+'</div><div class="entry-info"><div class="entry-name">'+esc(e.name)+'</div>'+breakdown+'</div><div class="entry-score'+sc+'">'+fmt(total)+'</div><div class="score-unit">pkt</div>';
+    var btn=document.createElement('button');btn.className='del-btn';btn.textContent='✕';
+    (function(s,id){btn.onclick=function(){deleteEntry(s,id);};})(sport,e.id);
+    div.appendChild(btn);list.appendChild(div);
+  });
+}
+function renderMatches(){
+  var entries=data['snake1v1'];var n=entries.length;
+  document.getElementById('snake1v1-count').textContent=n+' mecz'+(n===1?'':'ów');
+  var list=document.getElementById('snake1v1-list');
+  if(!n){list.innerHTML='<div class="empty"><span>🐍</span>Brak meczów!</div>';return;}
+  list.innerHTML='';
+  entries.slice().reverse().forEach(function(e){
+    var div=document.createElement('div');div.className='entry';
+    var zappka2=e.jury||0;var ji=zappka2?'<span class="zappka-badge">🐸 #'+zappka2+'</span>':'';
+    div.innerHTML='<div class="rank-badge">🐍</div><div class="entry-info"><div class="entry-name" style="color:#8b5cf6">'+esc(e.winner)+' <span style="color:var(--muted);font-weight:400;font-size:0.8rem">wygrał</span></div><div class="entry-breakdown">vs '+esc(e.loser)+ji+'</div></div>';
+    var btn=document.createElement('button');btn.className='del-btn';btn.textContent='✕';
+    (function(id){btn.onclick=function(){deleteEntry('snake1v1',id);};})(e.id);
+    div.appendChild(btn);list.appendChild(div);
+  });
+}
+function renderFeedback(items){
+  var list=document.getElementById('feedback-list');
+  if(!items.length){list.innerHTML='<div style="color:var(--muted);font-size:0.85rem">Brak opinii — bądź pierwszy!</div>';return;}
+  items.sort(function(a,b){return b.ts-a.ts;});list.innerHTML='';
+  items.forEach(function(item){
+    var div=document.createElement('div');div.className='feedback-item';
+    div.innerHTML='<div class="fb-name">'+esc(item.name)+'</div><div class="fb-text">'+esc(item.text)+'</div>';
+    list.appendChild(div);
+  });
+}
+
+function exportRaport() {
+  // Load SheetJS dynamically
+  var script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  script.onload = function() { doExport(); };
+  document.head.appendChild(script);
+}
+
+function doExport() {
+  var XLSX = window.XLSX;
+  var wb = XLSX.utils.book_new();
+  var gameNames = {ninja:'Ninja Frog', bokser:'Bokser', toss:'Toss', snake:'Snake', snake1v1:'Snake 1v1', pilka:'Piłka Nożna',galaxy:'Galaxy'};
+  var games = ['ninja','bokser','toss','snake','snake1v1','pilka'];
+
+  // ── ARKUSZ PODSUMOWANIE ──
+  var summaryData = [['Gra','Liczba zawodników','Najwyższy wynik','Zwycięzca']];
+  games.forEach(function(g) {
+    var entries = data[g] || [];
+    if(g === 'snake1v1') {
+      var wins = {};
+      entries.forEach(function(m){ if(m.winner) wins[m.winner]=(wins[m.winner]||0)+1; });
+      var top = Object.entries(wins).sort(function(a,b){return b[1]-a[1];})[0];
+      summaryData.push([gameNames[g], entries.length, top?top[1]+' wygranych':'-', top?top[0]:'-']);
+    } else {
+      var sorted = entries.slice().sort(function(a,b){return b.score-a.score;});
+      summaryData.push([gameNames[g], sorted.length, sorted[0]?sorted[0].score:'-', sorted[0]?sorted[0].name:'-']);
+    }
+  });
+  var wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+  wsSummary['!cols'] = [{wch:20},{wch:20},{wch:18},{wch:25}];
+  XLSX.utils.book_append_sheet(wb, wsSummary, 'Podsumowanie');
+
+  // ── ARKUSZE PER GRA ──
+  games.forEach(function(g) {
+    var entries = data[g] || [];
+    var rows;
+    if(g === 'snake1v1') {
+      rows = [['Miejsce','Zawodnik','Wygrane']];
+      var wins = {};
+      entries.forEach(function(m){ if(m.winner) wins[m.winner]=(wins[m.winner]||0)+1; });
+      Object.entries(wins).sort(function(a,b){return b[1]-a[1];}).forEach(function(e,i){
+        rows.push([i+1, e[0], e[1]]);
+      });
+    } else {
+      rows = [['Miejsce','Zawodnik','Punkty']];
+      entries.slice().sort(function(a,b){return b.score-a.score;}).forEach(function(e,i){
+        rows.push([i+1, e.name, e.score]);
+      });
+    }
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [{wch:10},{wch:28},{wch:14}];
+    // Bold header
+    XLSX.utils.book_append_sheet(wb, ws, gameNames[g].substring(0,31));
+  });
+
+  var date = new Date().toLocaleDateString('pl-PL').replace(/\./g,'-');
+  XLSX.writeFile(wb, 'Zabbkowe-Mistrzostwa-Triki-'+date+'.xlsx');
+}
+</script>
+</body>
 </html>
