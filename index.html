@@ -321,6 +321,13 @@ body{background:#0f0f2e;min-height:100vh;font-family:'Nunito',sans-serif;color:v
 <script>
 var ALL_TABS=['instrukcja','wnioski','ninja','bokser','toss','snake','snake1v1','pilka','galaxy'];
 var RANKING_SPORTS=['ninja','bokser','toss','snake','snake1v1','pilka','galaxy'];
+var ROUND_SPORTS={
+  snake:['16:30','19:30','22:30','01:30'],
+  pilka:['17:30','18:30','20:30','21:30','23:30','00:30']
+};
+// All DB keys including round-based ones
+var ALL_DB_KEYS=RANKING_SPORTS.slice();
+Object.keys(ROUND_SPORTS).forEach(function(s){ROUND_SPORTS[s].forEach(function(r){ALL_DB_KEYS.push(s+'_'+r.replace(':',''));});});
 var NAMES={instrukcja:'Instrukcja',wnioski:'Wnioski',ninja:'Ninja Frog',bokser:'Bokser',toss:'Toss',snake:'Snake',snake1v1:'Snake 1v1',pilka:'Piłka Nożna',galaxy:'Galaxy'};
 var EMOJI={ninja:'🥷',bokser:'🥊',toss:'🎯',snake:'🐍',snake1v1:'🐍',pilka:'⚽',galaxy:'🚀'};
 var MEDALS=['🥇','🥈','🥉'];
@@ -341,6 +348,48 @@ function fetchDB(key,cb){
 var lastHash={};
 function hashVal(val){return JSON.stringify(val);}
 
+
+function renderRound(sport){
+  var rounds=ROUND_SPORTS[sport];
+  var list=document.getElementById(sport+'-list');
+  var totalCount=0;
+  var html='';
+  rounds.forEach(function(r){
+    var dbKey=sport+'_'+r.replace(':','');
+    var entries=data[dbKey]||[];
+    totalCount+=entries.length;
+    html+='<div class="round-header">Runda '+r+' — '+entries.length+' zawodników</div>';
+    if(!entries.length){
+      html+='<div class="empty"><span>'+EMOJI[sport]+'</span>Brak wyników</div>';
+    } else {
+      entries.forEach(function(e,i){
+        var rank=i+1;
+        var badge=rank<=3?MEDALS[i]:rank;
+        var cls=rank<=3?' rank-'+rank:'';
+        var sc=rank===1?'':' score-'+sport;
+        var zappka=e.jury?'<div class="entry-breakdown"><span class="zappka-badge">🐸 #'+e.jury+' w Żappce</span></div>':'';
+        html+='<div class="entry'+cls+'" data-id="'+e.id+'" data-key="'+dbKey+'">'
+          +'<div class="rank-badge">'+badge+'</div>'
+          +'<div class="entry-info"><div class="entry-name">'+esc(e.name)+'</div>'+zappka+'</div>'
+          +'<div class="entry-score'+sc+'">'+fmt(e.score)+'</div>'
+          +'<div class="score-unit">pkt</div>'
+          +'<button class="del-btn" onclick="deleteRoundEntry(''+dbKey+'',''+e.id+'')">✕</button>'
+          +'</div>';
+      });
+    }
+  });
+  list.innerHTML=html;
+  document.getElementById(sport+'-count').textContent=totalCount+' zawodników';
+}
+
+function deleteRoundEntry(dbKey,id){
+  if(!data[dbKey])return;
+  data[dbKey]=data[dbKey].filter(function(e){return String(e.id)!==String(id);});
+  var sport=dbKey.split('_')[0];
+  renderRound(sport);
+  var obj={};data[dbKey].forEach(function(e){obj[e.id]=e;});
+  putDB(dbKey,Object.keys(obj).length?obj:null);
+}
 function pollAll(){
   RANKING_SPORTS.forEach(function(sport){
     fetchDB(sport,function(val){
@@ -348,10 +397,11 @@ function pollAll(){
       if(h===lastHash[sport])return;
       lastHash[sport]=h;
       data[sport]=val?Object.values(val):[];
-      if(sport!=='snake1v1'){data[sport].sort(function(a,b){return b.score-a.score;});render(sport);}
+      if(sport!=='snake1v1'){data[sport].sort(function(a,b){return b.score-a.score;});if(ROUND_SPORTS[sport])renderRound(sport);else render(sport);}
       else{renderMatches();}
     });
   });
+
   fetchDB('feedback',function(val){
     var h=hashVal(val);
     if(h===lastHash['feedback'])return;
@@ -391,7 +441,8 @@ function addEntry(sport){
   data[sport].sort(function(a,b){return b.score-a.score;});
   document.getElementById(sport+'-name').value='';document.getElementById(sport+'-score').value='';
   if(juryEl)juryEl.value='';document.getElementById(sport+'-name').focus();
-  render(sport);var obj={};data[sport].forEach(function(e){obj[e.id]=e;});putDB(sport,obj);
+  if(ROUND_SPORTS[sport])renderRound(sport);else render(sport);
+  var obj={};data[sport].forEach(function(e){obj[e.id]=e;});putDB(sport,obj);
 }
 function addMatch(){
   var p1=document.getElementById('s1v1-p1').value.trim();var p2=document.getElementById('s1v1-p2').value.trim();
@@ -416,7 +467,7 @@ function addFeedback(){
 }
 function deleteEntry(sport,id){
   data[sport]=data[sport].filter(function(e){return String(e.id)!==String(id);});
-  if(sport==='snake1v1')renderMatches();else render(sport);
+  if(sport==='snake1v1')renderMatches();else if(ROUND_SPORTS[sport])renderRound(sport);else render(sport);
   var obj={};data[sport].forEach(function(e){if(e.id)obj[e.id]=e;});
   putDB(sport,Object.keys(obj).length?obj:null);
 }
